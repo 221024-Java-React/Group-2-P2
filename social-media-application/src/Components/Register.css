@@ -1,0 +1,15 @@
+.reg-form {
+  max-width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.reg-form > input {
+  margin: 0.5rem;
+}
+
+.reg-form > button {
+  margin: 0.5rem;
+}
