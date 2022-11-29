@@ -1,17 +1,20 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import Login from './Components/Login';
-import Navigation from './Components/Navigation';
 import Register from './Components/Register';
+import UserProfile from './Components/UserProfile/UserProfile';
 
 function App() {
   return (
-    <div className='App'>
-      <Navigation />
-      <Login />
-      {/* <Register /> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<UserProfile />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
