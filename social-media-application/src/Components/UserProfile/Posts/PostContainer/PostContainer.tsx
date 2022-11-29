@@ -2,12 +2,11 @@ import React from 'react';
 import Post from '../Post/Post';
 import './PostContainer.css';
 
-const PostContainer = () => {
+const PostContainer = (props : any) => {
   return (
     <div className='post-container'>
       <h2 hidden>Posts</h2>
-      <Post />
-      <Post />
+      {props.children}
     </div>
   );
 };

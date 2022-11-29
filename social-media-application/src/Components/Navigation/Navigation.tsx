@@ -22,7 +22,7 @@ const Navigation = () => {
       </Container>
       <Nav className='nav'>
         <input type='text' name='search' placeholder='Search' />
-        <Nav.Link>
+        <Nav.Link href="/profile">
           <FontAwesomeIcon icon={faUser} className='icon' />
         </Nav.Link>
         <Nav.Link>
