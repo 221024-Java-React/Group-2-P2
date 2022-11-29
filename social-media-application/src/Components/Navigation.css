@@ -1,0 +1,40 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(214, 79, 79);
+  /* padding: 1rem; */
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav > * {
+  padding: 0.5rem;
+}
+
+.nav > input {
+  border-radius: 20px;
+  border: none;
+  box-shadow: -2px 2px 2px white;
+}
+
+.nav a {
+  color: black;
+}
+
+.logo {
+  width: 2.5rem;
+  height: auto;
+  padding: 0.6rem;
+}
+
+
+.icon {
+  width: 1.2rem;
+  height: auto;
+  margin: -0.1rem;
+}

@@ -1,0 +1,18 @@
+.status-bar {
+  height: 15vh;
+  border: 3px solid white;
+  border-radius: 15px;
+  box-shadow: 0 0 8px black;
+  margin: 2rem;
+  padding: 1rem 2rem;
+}
+
+.status-bar textarea {
+  resize: none;
+}
+
+.status-bar form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
