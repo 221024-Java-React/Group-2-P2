@@ -1,10 +1,11 @@
 import React from 'react';
-import AboutMe from './AboutMe';
-import Navigation from '../Navigation';
-import ProfileBanner from './ProfileBanner';
-import StatusBar from './StatusBar';
+import AboutMe from './AboutMe/AboutMe';
+import Navigation from '../Navigation/Navigation';
+import ProfileBanner from './ProfileBanner/ProfileBanner';
+import StatusBar from './StatusBar/StatusBar';
 import './UserProfile.css';
-import PostContainer from './PostContainer';
+import PostContainer from './Posts/PostContainer/PostContainer';
+import Post from './Posts/Post/Post';
 
 const UserProfile = () => {
   return (
@@ -13,7 +14,10 @@ const UserProfile = () => {
       <ProfileBanner />
       <StatusBar />
       <AboutMe />
-      <PostContainer />
+      <PostContainer>
+        <Post />
+        <Post />
+      </PostContainer>
     </>
   );
 };

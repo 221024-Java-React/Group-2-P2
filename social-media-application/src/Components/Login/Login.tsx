@@ -1,6 +1,6 @@
 import React from 'react';
 import './Login.css';
-import Navigation from './Navigation';
+import Navigation from '../Navigation/Navigation';
 
 const Login = () => {
   return (
