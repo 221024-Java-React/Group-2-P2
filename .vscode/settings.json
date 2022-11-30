@@ -10,5 +10,6 @@
             "username": "postgres",
             "password": "rootpw"
         }
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
