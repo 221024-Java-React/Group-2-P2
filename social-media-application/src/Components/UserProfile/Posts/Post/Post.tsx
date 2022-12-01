@@ -1,22 +1,19 @@
 import React from 'react';
 import './Post.css';
+import { User, users } from '../../../../Util/Users';
+import { PostData } from '../../../../Util/Posts';
 
-const Post = () => {
+const Post : React.FC<{post : PostData}> = ({post}) => {
   return (
     <div className='post'>
       <div className='post-header'>
         <img src='' alt='Profile Pic' />
         <div>
-          <h3>Jack Koscheka</h3>
-          <p>9 hrs</p>
+          <h3>{users[post.userid].profileName}</h3>
+          <p>{post.time}</p>
         </div>
       </div>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore,
-        debitis ducimus impedit illum accusantium consequatur voluptas natus
-        quod minus. Ad maxime tempora vero incidunt? Quaerat porro suscipit esse
-        qui vero.
-      </p>
+      <p>{post.message}</p>
     </div>
   );
 };

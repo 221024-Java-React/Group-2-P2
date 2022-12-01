@@ -15,8 +15,8 @@ const UserProfile = () => {
       <StatusBar />
       <AboutMe />
       <PostContainer>
-        <Post />
-        <Post />
+        {/* <Post />
+        <Post /> */}
       </PostContainer>
     </>
   );
