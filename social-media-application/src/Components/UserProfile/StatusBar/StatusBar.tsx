@@ -2,6 +2,11 @@ import React from 'react';
 import './StatusBar.css';
 
 const StatusBar = () => {
+
+  const submitHandler = () => {
+    console.log("Submiting Post");
+  };
+
   return (
     <div className='status-bar'>
       <form>
@@ -11,7 +16,7 @@ const StatusBar = () => {
           rows={4}
           cols={50}
         ></textarea>
-        <button type='submit'>Update</button>
+        <button  onClick={submitHandler} type='submit'>Update</button>
       </form>
     </div>
   );
