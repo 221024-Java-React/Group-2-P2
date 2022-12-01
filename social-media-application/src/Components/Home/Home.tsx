@@ -6,7 +6,7 @@ import { PostData, posts } from '../../Util/Posts';
 
 const Home = () => {
   const userPosts = posts.map((postData : PostData) => {
-    return <Post post={postData} />;
+    return <Post key={postData.id} post={postData} />;
   });
 
   return (

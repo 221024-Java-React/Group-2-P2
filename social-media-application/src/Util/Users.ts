@@ -1,4 +1,6 @@
 
+export const userid = 0;
+
 export interface User {
     profileName: string,
     email: string,
