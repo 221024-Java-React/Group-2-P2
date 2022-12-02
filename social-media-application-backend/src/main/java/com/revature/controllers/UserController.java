@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.revature.models.User;
 import com.revature.services.UserService;
@@ -32,12 +34,14 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping
-    public ResponseEntity<String> test(HttpSession session, HttpServletResponse response) throws IOException {
-        if(session.getAttribute("CurrentUser") == null) {
-            response.sendRedirect("http:localhost:3000/login");
+
+    @PostMapping("/home")
+    public ResponseEntity<String> checkIfLoggedIn(HttpSession session, String cookieID) {
+        if(!session.getId().equals(cookieID)) {
+            return new ResponseEntity("Not Logged In", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Currently Logged In", HttpStatus.OK);
+
     }
     
     @PostMapping("/users/register")
@@ -58,16 +62,16 @@ public class UserController {
         User tempUser = userService.login(user);
         if(tempUser != null){
             session.setAttribute("CurrentUser", tempUser.getId());
-            return new ResponseEntity<>("Logged in Successfully", HttpStatus.OK);
+            return new ResponseEntity<>(session.getId(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Failed to log in", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @GetMapping("/log-out")
-    public void logout(HttpSession session, HttpServletResponse hsr) throws IOException{
+    public ResponseEntity<String> logout(HttpSession session){
         session.invalidate();
-        hsr.sendRedirect("http:localhost:3000/login");
+        return new ResponseEntity<>("Logged out Successfully", HttpStatus.OK);
     }
 
     @GetMapping("/users/all")

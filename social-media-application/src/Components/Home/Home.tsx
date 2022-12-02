@@ -10,10 +10,12 @@ const Home = () => {
 
   const [activeUsers, setActiveUsers] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [currentUser, setCurrentUser] = useState(document.cookie);
+
 
   useEffect(() => {
 
-    axios.get("http://localhost:8090/");
+    axios.post("http://localhost:8090/home", { currentUser }).then((response) => {console.log(response)});
 
     axios.get("http://localhost:8090/posts/all").then((response) => {
 

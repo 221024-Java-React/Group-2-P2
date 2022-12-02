@@ -17,8 +17,8 @@ const Navigation = () => {
 
   const logoutHandler = () => {
 
-    // axios.get("http://localhost:8090/logout");
-    
+    axios.get("http://localhost:8090/log-out").then((response) => {console.log(response)});
+    document.cookie = "";
   }
 
   return (

@@ -16,6 +16,8 @@ const Login = () => {
 
       // TODO redirect
       console.log(response);
+    //   localStorage.setItem("CurrentUser", response.data);
+        document.cookie = `SESSION=${response.data}`;
 
     });
   }
