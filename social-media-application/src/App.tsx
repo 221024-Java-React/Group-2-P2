@@ -17,7 +17,6 @@ function App() {
         <Route path='/profile' element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
-    
   );
 }
 
