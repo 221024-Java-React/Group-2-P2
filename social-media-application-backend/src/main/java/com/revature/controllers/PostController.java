@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,28 +22,31 @@ import com.revature.services.PostService;
 
 @RestController
 @RequestMapping("/posts")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
     
-    private PostService postService;
+    @Autowired
+    PostService postService;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
+    @GetMapping("/all")
+    public ResponseEntity<List<Post>> findAllPosts() {
+        return new ResponseEntity<>(this.postService.findAllPosts(), HttpStatus.OK);
     }
 
-    @GetMapping
-    public Object hello(HttpSession session) {
-        return session.getAttribute("CurrentUser");
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> findPostById(@PathVariable("id") int id) {
+        return new ResponseEntity<>(postService.findPostById(id), HttpStatus.OK);
     }
-    
+
     @PostMapping("/create")
-    public HttpStatus createPost(@RequestBody Post post){
-        ResponseEntity<String> response;
-        Post newPost = this.postService.createPost(post);
-        if(newPost != null){
-            response = new ResponseEntity<>("Post created successfully", HttpStatus.CREATED);
-        } else {
-            response = new ResponseEntity<>("Error creating Post", HttpStatus.CONFLICT);
-        }
-        return response.getStatusCode();
+    public ResponseEntity<Post> createPost(@RequestBody Post post, HttpSession session) {
+        post.setUserId(Integer.parseInt(session.getAttribute("CurrentUser").toString()));
+        return new ResponseEntity<>(postService.createPost(post), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deletePostById(@PathVariable("id") int id) {
+        postService.deletePostById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
