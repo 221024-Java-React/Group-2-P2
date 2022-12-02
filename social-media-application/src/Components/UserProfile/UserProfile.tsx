@@ -22,13 +22,13 @@ const UserProfile = () => {
 
   useEffect(() => {
 
-    axios.get("http://localhost:8090/user/info").then((response) => {
+    // axios.get("http://localhost:8090/user/info").then((response) => {
 
-      // setPosts(response.data);
+    //   // setPosts(response.data);
 
-      // console.log(response.data);
+    //   // console.log(response.data);
 
-    });
+    // });
 
     axios.get("http://localhost:8090/posts/all").then((response) => {
 
