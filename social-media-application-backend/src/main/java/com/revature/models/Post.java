@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,5 +25,14 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "creation_time")
+    private LocalDateTime creationTime;
+
     private String content;
+
+    @Column(name = "user_id")
+    private Integer userId;
+    
+    @Column(name = "profile_name")
+    private String profileName;
 }

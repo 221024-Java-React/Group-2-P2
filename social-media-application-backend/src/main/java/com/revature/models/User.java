@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Customers")
-public class Customer {
+@Table(name = "Users")
+public class User {
     
     @Id
-    @Column(name = "customer_id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -37,8 +37,13 @@ public class Customer {
 
     private String password;
 
-    @OneToMany(targetEntity = Post.class, cascade = { CascadeType.ALL})
-    @JoinTable(name = "Customer_Posts", joinColumns = { @JoinColumn(name = "customer_id")}, inverseJoinColumns = { @JoinColumn(name = "post_id") })
+    @OneToMany(targetEntity = Post.class, cascade = { CascadeType.ALL}, orphanRemoval = true)
+    @JoinTable(name = "User_Posts", joinColumns = { @JoinColumn(name = "user_id")}, inverseJoinColumns = { @JoinColumn(name = "post_id") })
     private List<Post> posts;
 
+    public User(String profileName, int id, List<Post> posts) {
+        this.profileName = profileName;
+        this.id = id;
+        this.posts = posts;
+    }
 }
