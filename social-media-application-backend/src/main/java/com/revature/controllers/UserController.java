@@ -1,8 +1,11 @@
 package com.revature.controllers;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -30,16 +33,20 @@ public class UserController {
         this.userService = userService;
     }
     @GetMapping
-    public void test(HttpSession session) {
-        System.out.println(session.getAttribute("CurrentUser"));
+    public ResponseEntity<String> test(HttpSession session, HttpServletResponse response) throws IOException {
+        if(session.getAttribute("CurrentUser") == null) {
+            response.sendRedirect("http:localhost:3000/login");
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @PostMapping("/users/register")
-    public HttpStatus createUser(@RequestBody User user){
+    public HttpStatus createUser(@RequestBody User user, HttpServletResponse hsr) throws IOException{
         ResponseEntity<String> response;
         User newUser = this.userService.createUser(user);
         if(newUser != null){
             response = new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
+            hsr.sendRedirect("/");
         } else {
             response = new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
         }
@@ -57,9 +64,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/logout")
-    public void logout(){
-        // Default Logout used by Spring Security
+    @GetMapping("/log-out")
+    public void logout(HttpSession session, HttpServletResponse hsr) throws IOException{
+        session.invalidate();
+        hsr.sendRedirect("http:localhost:3000/login");
     }
 
     @GetMapping("/users/all")
