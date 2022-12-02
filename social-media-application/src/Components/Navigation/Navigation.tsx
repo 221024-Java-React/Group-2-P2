@@ -11,8 +11,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, NavItem, NavLink } from 'react-bootstrap';
+import axios from 'axios';
 
 const Navigation = () => {
+
+  const logoutHandler = () => {
+
+    // axios.get("http://localhost:8090/logout");
+    
+  }
+
   return (
     <Navbar className='navbar'>
       <Container>
@@ -34,7 +42,7 @@ const Navigation = () => {
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>Logout</Dropdown.Item>
+            <Dropdown.Item><button onClick={logoutHandler}>Logout</button></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Nav>

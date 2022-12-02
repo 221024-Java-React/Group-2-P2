@@ -1,12 +1,31 @@
 import React from 'react';
 import Navigation from '../Navigation/Navigation';
 import './Register.css';
+import axios from 'axios';
+
+import { User } from '../../Util/Users'
 
 const Register = () => {
+
+  const registerHandler = (event : any) => {
+
+    event.preventDefault();
+
+    axios.post("http://localhost:8090/users/register", {
+      profileName: event.target[0].value,
+      email: event.target[1].value,
+      password: event.target[2].value
+    }).then((response) => {
+
+      // TODO redirect
+
+    });
+  }
+
   return (
     <>
       <Navigation />
-      <form className='reg-form'>
+      <form className='reg-form' onSubmit={registerHandler}>
         <h1>Register</h1>
         <input type='text' name='profileName' placeholder='Profile Name' />
         <input type='text' name='email' placeholder='Email' />
@@ -17,8 +36,8 @@ const Register = () => {
           placeholder='Confirm Password'
         />
         <button type='submit'>Register</button>
-        <h4>Already a member?</h4>
-        <a href='#'>Login</a>
+        <h4>Already A Member?</h4>
+        <a href='/login'>Login</a>
       </form>
     </>
   );
