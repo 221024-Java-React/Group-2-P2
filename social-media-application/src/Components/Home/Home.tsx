@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navigation from '../Navigation/Navigation';
 import Post from '../UserProfile/Posts/Post/Post';
 import PostContainer from '../UserProfile/Posts/PostContainer/PostContainer';
 import { PostData } from '../../Util/Posts';
-import { useState } from 'react';
 import axios from 'axios';
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const Home = () => {
 
@@ -15,7 +14,6 @@ const Home = () => {
         cookie: string;
       };
 
-  const [activeUsers, setActiveUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const cookie = document.cookie.slice(8);
 

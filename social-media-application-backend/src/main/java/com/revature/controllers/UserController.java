@@ -1,11 +1,9 @@
 package com.revature.controllers;
 
-import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -41,16 +39,16 @@ public class UserController {
         System.out.println(userService.getSessionById(decodedCookieId));
         if(userService.getSessionById(userService.getSessionById(decodedCookieId)) != null) {
             System.out.println(decodedCookieId);
-            return new ResponseEntity("Currently Logged In", HttpStatus.OK);
+            return new ResponseEntity<>("Currently Logged In", HttpStatus.OK);
         }
-        return new ResponseEntity("Not Logged In", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("Not Logged In", HttpStatus.UNAUTHORIZED);
 
     }
     
     @PostMapping("/users/register")
     public ResponseEntity<String> createUser(@RequestBody User user){
         if(userService.findUserByEmail(user.getEmail()) == null){
-            User newUser = userService.createUser(user);
+            userService.createUser(user);
             return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);

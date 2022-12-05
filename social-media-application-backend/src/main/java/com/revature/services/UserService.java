@@ -93,11 +93,6 @@ public class UserService {
 
     public String getSessionById(String sessionId) {
         String sessionAttributes = userRepository.getSessionById(sessionId);
-       
-        if(sessionAttributes != null) {
-            return sessionAttributes;
-        }
-
         return sessionAttributes;
     }
 

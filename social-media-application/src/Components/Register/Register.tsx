@@ -3,7 +3,6 @@ import Navigation from '../Navigation/Navigation';
 import './Register.css';
 import axios from 'axios';
 
-import { User } from '../../Util/Users'
 import { useNavigate } from "react-router";
 
 const Register = () => {
