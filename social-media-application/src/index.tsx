@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import AuthContextProvider from './Context/AuthContext';
+// import AuthContextProvider from './Context/AuthContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,9 +10,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <AuthContextProvider>
+        {/* <AuthContextProvider> */}
             <App />
-        </AuthContextProvider>
+        {/* </AuthContextProvider> */}
     </React.StrictMode>
 );
 

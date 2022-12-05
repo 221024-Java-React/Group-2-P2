@@ -5,6 +5,7 @@ import PostContainer from '../UserProfile/Posts/PostContainer/PostContainer';
 import { PostData } from '../../Util/Posts';
 import axios from 'axios';
 import { useNavigate } from "react-router";
+import StatusBar from "../UserProfile/StatusBar/StatusBar";
 
 const Home = () => {
 
@@ -20,7 +21,7 @@ const Home = () => {
   useEffect(() => {
 
     axios.get("http://localhost:8090/" + cookie).then((response) => {
-        console.log(response);
+
     }).catch(e => {
         return navigate("/login");
     });
@@ -38,6 +39,7 @@ const Home = () => {
   return (
     <>
         <Navigation />
+        <StatusBar />
         <PostContainer>
           {userPosts}
         </PostContainer>

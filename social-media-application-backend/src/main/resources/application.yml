@@ -10,7 +10,7 @@ spring:
         show-sql: true
     session:
         store-type: jdbc
-        timeout: 600
+        timeout: 6000
         jdbc:
             initialize-schema: always
 

@@ -2,20 +2,25 @@ import React from 'react';
 import './StatusBar.css';
 import axios from 'axios';
 import { userid } from '../../../Util/Users';
+import { useNavigate } from "react-router";
 
-const STATUS_POST_URL = "http://localhost:3000/post/create";
+const STATUS_POST_URL = "http://localhost:8090/posts/create/";
 
 const StatusBar = () => {
+
+    const navigate = useNavigate();
+
+  const cookie = document.cookie.slice(8);
+
 
   const submitHandler = (event : any) => {
     event.preventDefault();
 
-    console.log(event);
-    console.log(event.target[0].value);
-
-    axios.post(STATUS_POST_URL, {
+    axios.post(STATUS_POST_URL + cookie, {
       userid: userid,
-      message: event.target[0].value
+      content: event.target[0].value
+    }).then(() => {
+        return navigate(0);
     });
   };
 
