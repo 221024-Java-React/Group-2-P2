@@ -48,16 +48,12 @@ public class UserController {
     }
     
     @PostMapping("/users/register")
-    public HttpStatus createUser(@RequestBody User user, HttpServletResponse hsr) throws IOException{
-        ResponseEntity<String> response;
-        User newUser = this.userService.createUser(user);
-        if(newUser != null){
-            response = new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
-            hsr.sendRedirect("/");
-        } else {
-            response = new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
+    public ResponseEntity<String> createUser(@RequestBody User user){
+        if(userService.findUserByEmail(user.getEmail()) == null){
+            User newUser = userService.createUser(user);
+            return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
         }
-        return response.getStatusCode();
+        return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/login")

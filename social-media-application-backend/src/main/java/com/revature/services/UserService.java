@@ -104,4 +104,12 @@ public class UserService {
     public void removeSessionById(String cookieId) {
         userRepository.removeSessionById(cookieId);
     }
+
+    public User findUserByEmail(String email) {
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }
+        return null;
+    }
 }
