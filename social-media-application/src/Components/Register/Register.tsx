@@ -4,8 +4,11 @@ import './Register.css';
 import axios from 'axios';
 
 import { User } from '../../Util/Users'
+import { useNavigate } from "react-router";
 
 const Register = () => {
+
+    const navigate = useNavigate();
 
   const registerHandler = (event : any) => {
 
@@ -16,9 +19,7 @@ const Register = () => {
       email: event.target[1].value,
       password: event.target[2].value
     }).then((response) => {
-
-      // TODO redirect
-
+      return navigate("/login");
     });
   }
 
