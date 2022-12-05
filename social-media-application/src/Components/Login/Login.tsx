@@ -1,6 +1,5 @@
 import React from 'react';
 import './Login.css';
-import Navigation from '../Navigation/Navigation';
 import axios from 'axios';
 import { useNavigate } from "react-router";
 
@@ -24,7 +23,6 @@ const Login = () => {
 
   return (
     <>
-      <Navigation />
       <form className='login-form' onSubmit={loginHandler}>
         <h1>Login</h1>
         <input type='text' name='email' placeholder='Email' />

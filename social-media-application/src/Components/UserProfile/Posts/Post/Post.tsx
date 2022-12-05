@@ -10,7 +10,6 @@ const DELETE_URL = "http://localhost:3000/posts/id?=";
 const Post : React.FC<{post : PostData}> = ({post}) => {
 
   const deleteHandler = () => {
-    console.log("Deleting Post " + post.id);
     //axios.delete(DELETE_URL + post.userid);
   };
 

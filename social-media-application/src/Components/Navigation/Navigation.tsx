@@ -8,6 +8,7 @@ import {
   faMessage,
   faBars,
   faPeopleRobbery,
+  faDoorOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, NavItem, NavLink } from 'react-bootstrap';
@@ -23,7 +24,7 @@ const Navigation = () => {
 
   const cookie = document.cookie.slice(8);
   axios.get("http://localhost:8090/log-out/" + cookie).then((response) => {
-        console.log(response);
+
         return navigate("/login");
     });
   }
@@ -32,7 +33,9 @@ const Navigation = () => {
     <Navbar className='navbar'>
       <Container>
         <Navbar.Brand>
-          <FontAwesomeIcon icon={faPeopleRobbery} className='logo' />
+            <Nav.Link href="/">
+                <FontAwesomeIcon icon={faPeopleRobbery} className='logo' />
+            </Nav.Link>
         </Navbar.Brand>
       </Container>
       <Nav className='nav'>
@@ -43,15 +46,7 @@ const Navigation = () => {
         <Nav.Link>
           <FontAwesomeIcon icon={faMessage} className='icon' />
         </Nav.Link>
-        <Dropdown as={NavItem}>
-          <Dropdown.Toggle as={NavLink}>
-            <FontAwesomeIcon icon={faBars} className='icon' />
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item><button onClick={logoutHandler}>Logout</button></Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <FontAwesomeIcon icon={faDoorOpen} id="logout-button" onClick={logoutHandler}/>
       </Nav>
     </Navbar>
   );

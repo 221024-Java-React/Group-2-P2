@@ -24,7 +24,6 @@ const Register = () => {
 
   return (
     <>
-      <Navigation />
       <form className='reg-form' onSubmit={registerHandler}>
         <h1>Register</h1>
         <input type='text' name='profileName' placeholder='Profile Name' />

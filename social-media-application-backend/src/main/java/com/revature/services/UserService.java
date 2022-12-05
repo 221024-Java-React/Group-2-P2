@@ -91,6 +91,23 @@ public class UserService {
         return currentSessions;
     }
 
+    public int getSessionAttributesById(String id) {
+        List<byte[]> sessionsAttributes = new ArrayList<>(userRepository.getSessionAttributesById(id));
+        List<Integer> currentSessions = new ArrayList<>();
+        for(byte[] s : sessionsAttributes) {
+            ObjectInput in;
+            try {
+                in = new ObjectInputStream(new ByteArrayInputStream(s));
+                currentSessions.add(Integer.parseInt(in.readObject().toString()));
+            } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return currentSessions.get(0);
+    }
+
     public String getSessionById(String sessionId) {
         String sessionAttributes = userRepository.getSessionById(sessionId);
         return sessionAttributes;

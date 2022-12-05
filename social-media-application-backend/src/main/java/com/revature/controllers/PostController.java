@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Post;
 import com.revature.services.PostService;
+import com.revature.services.UserService;
 
 
 @RestController
@@ -27,6 +29,9 @@ public class PostController {
     
     @Autowired
     PostService postService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Post>> findAllPosts() {
@@ -38,9 +43,11 @@ public class PostController {
         return new ResponseEntity<>(postService.findPostById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@RequestBody Post post, HttpSession session) {
-        post.setUserId(Integer.parseInt(session.getAttribute("CurrentUser").toString()));
+    @PostMapping("/create/{cookieId}")
+    public ResponseEntity<Post> createPost(@RequestBody Post post, @PathVariable String cookieId, HttpSession session) {
+        byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
+        String decodedCookieId = new String(decodedCookieIdBytes);
+        post.setUserId(userService.getSessionAttributesById(decodedCookieId));
         return new ResponseEntity<>(postService.createPost(post), HttpStatus.CREATED);
     }
 

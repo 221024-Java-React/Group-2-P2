@@ -38,3 +38,7 @@
   height: auto;
   margin: -0.1rem;
 }
+
+#logout-button {
+    cursor: pointer;
+}

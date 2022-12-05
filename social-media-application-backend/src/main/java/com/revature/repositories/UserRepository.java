@@ -18,6 +18,9 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     @Query(value = "SELECT attribute_bytes FROM spring_session_attributes", nativeQuery = true)
     List<byte[]> getSpringSessionAttributes();
 
+    @Query(value = "SELECT attribute_bytes FROM spring_session_attributes ssa JOIN spring_session ss ON ssa.session_primary_id = ss.primary_id WHERE session_id = ?1", nativeQuery = true)
+    List<byte[]> getSessionAttributesById(String id);
+
     @Query(value = "SELECT * FROM users WHERE LOWER(profile_name) LIKE LOWER(?1)", nativeQuery = true)
     List<User> findUsersByProfileName(String profileName);
 

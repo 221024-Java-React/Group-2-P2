@@ -26,15 +26,12 @@ const UserProfile = () => {
 
     //   // setPosts(response.data);
 
-    //   // console.log(response.data);
-
     // });
 
     axios.get("http://localhost:8090/posts/all").then((response) => {
 
       setPosts(response.data);
 
-      console.log(response.data);
 
     });
   }, []);
