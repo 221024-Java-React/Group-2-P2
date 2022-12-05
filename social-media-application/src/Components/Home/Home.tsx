@@ -5,25 +5,32 @@ import PostContainer from '../UserProfile/Posts/PostContainer/PostContainer';
 import { PostData } from '../../Util/Posts';
 import { useState } from 'react';
 import axios from 'axios';
+import { redirect, useNavigate } from "react-router";
 
 const Home = () => {
 
+    const navigate = useNavigate();
+
+    type CreateUserResponse = {
+        cookie: string;
+      };
+
   const [activeUsers, setActiveUsers] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(document.cookie);
-
+  const cookie = document.cookie.slice(8);
 
   useEffect(() => {
 
-    axios.post("http://localhost:8090/home", { currentUser }).then((response) => {console.log(response)});
+    axios.get("http://localhost:8090/" + cookie).then((response) => {
+        console.log(response);
+    }).catch(e => {
+        return navigate("/login");
+    });
 
     axios.get("http://localhost:8090/posts/all").then((response) => {
-
       setPosts(response.data);
-
-      console.log(response.data);
-
     });
+
   }, []);
 
   const userPosts = posts.map((postData : PostData) => {

@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.revature.models.User;
 import com.revature.services.UserService;
@@ -35,12 +33,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/home")
-    public ResponseEntity<String> checkIfLoggedIn(HttpSession session, String cookieID) {
-        if(!session.getId().equals(cookieID)) {
-            return new ResponseEntity("Not Logged In", HttpStatus.UNAUTHORIZED);
+    @GetMapping("/{cookieId}")
+    public ResponseEntity<String> checkIfLoggedIn(@PathVariable String cookieId, HttpSession session) {
+        System.out.println(session.getId());
+        byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
+        String decodedCookieId = new String(decodedCookieIdBytes);
+        System.out.println(userService.getSessionById(decodedCookieId));
+        if(userService.getSessionById(userService.getSessionById(decodedCookieId)) != null) {
+            System.out.println(decodedCookieId);
+            return new ResponseEntity("Currently Logged In", HttpStatus.OK);
         }
-        return new ResponseEntity("Currently Logged In", HttpStatus.OK);
+        return new ResponseEntity("Not Logged In", HttpStatus.UNAUTHORIZED);
 
     }
     
@@ -62,15 +65,18 @@ public class UserController {
         User tempUser = userService.login(user);
         if(tempUser != null){
             session.setAttribute("CurrentUser", tempUser.getId());
-            return new ResponseEntity<>(session.getId(), HttpStatus.OK);
+            System.out.println(Base64.getEncoder().encodeToString(session.getId().getBytes()));
+            return new ResponseEntity<>(Base64.getEncoder().encodeToString(session.getId().getBytes()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
-    @GetMapping("/log-out")
-    public ResponseEntity<String> logout(HttpSession session){
-        session.invalidate();
+    @GetMapping("/log-out/{cookieId}")
+    public ResponseEntity<String> logout(@PathVariable String cookieId, HttpSession session){
+        byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
+        String decodedCookieId = new String(decodedCookieIdBytes);
+        userService.removeSessionById(decodedCookieId);
         return new ResponseEntity<>("Logged out Successfully", HttpStatus.OK);
     }
 

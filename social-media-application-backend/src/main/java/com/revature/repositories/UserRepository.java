@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,13 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
     @Query(value = "SELECT * FROM users WHERE LOWER(profile_name) LIKE LOWER(?1)", nativeQuery = true)
     List<User> findUsersByProfileName(String profileName);
+
+    @Query(value = "SELECT session_id FROM spring_session WHERE session_id = ?1", nativeQuery = true)
+    String getSessionById(String id);
+
+    @Modifying
+    @Query(value = "DELETE FROM spring_session WHERE session_id = ?1", nativeQuery = true)
+    void removeSessionById(String cookieId);
 
     
 }

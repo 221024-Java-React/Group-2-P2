@@ -90,4 +90,18 @@ public class UserService {
         }
         return currentSessions;
     }
+
+    public String getSessionById(String sessionId) {
+        String sessionAttributes = userRepository.getSessionById(sessionId);
+       
+        if(sessionAttributes != null) {
+            return sessionAttributes;
+        }
+
+        return sessionAttributes;
+    }
+
+    public void removeSessionById(String cookieId) {
+        userRepository.removeSessionById(cookieId);
+    }
 }
