@@ -2,8 +2,12 @@ import React from 'react';
 import './Login.css';
 import Navigation from '../Navigation/Navigation';
 import axios from 'axios';
+import { useNavigate } from "react-router";
 
 const Login = () => {
+
+    const navigate = useNavigate();
+
 
   const loginHandler = (event : any) => {
 
@@ -13,10 +17,8 @@ const Login = () => {
       email: event.target[0].value,
       password: event.target[1].value
     }).then((response) => {
-
-      // TODO redirect
-      console.log(response);
-
+        document.cookie = `SESSION=${response.data}`;
+        return navigate("/");
     });
   }
 

@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
@@ -32,12 +32,19 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping
-    public ResponseEntity<String> test(HttpSession session, HttpServletResponse response) throws IOException {
-        if(session.getAttribute("CurrentUser") == null) {
-            response.sendRedirect("http:localhost:3000/login");
+
+    @GetMapping("/{cookieId}")
+    public ResponseEntity<String> checkIfLoggedIn(@PathVariable String cookieId, HttpSession session) {
+        System.out.println(session.getId());
+        byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
+        String decodedCookieId = new String(decodedCookieIdBytes);
+        System.out.println(userService.getSessionById(decodedCookieId));
+        if(userService.getSessionById(userService.getSessionById(decodedCookieId)) != null) {
+            System.out.println(decodedCookieId);
+            return new ResponseEntity("Currently Logged In", HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity("Not Logged In", HttpStatus.UNAUTHORIZED);
+
     }
     
     @PostMapping("/users/register")
@@ -58,16 +65,19 @@ public class UserController {
         User tempUser = userService.login(user);
         if(tempUser != null){
             session.setAttribute("CurrentUser", tempUser.getId());
-            return new ResponseEntity<>("Logged in Successfully", HttpStatus.OK);
+            System.out.println(Base64.getEncoder().encodeToString(session.getId().getBytes()));
+            return new ResponseEntity<>(Base64.getEncoder().encodeToString(session.getId().getBytes()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Failed to log in", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
-    @GetMapping("/log-out")
-    public void logout(HttpSession session, HttpServletResponse hsr) throws IOException{
-        session.invalidate();
-        hsr.sendRedirect("http:localhost:3000/login");
+    @GetMapping("/log-out/{cookieId}")
+    public ResponseEntity<String> logout(@PathVariable String cookieId, HttpSession session){
+        byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
+        String decodedCookieId = new String(decodedCookieIdBytes);
+        userService.removeSessionById(decodedCookieId);
+        return new ResponseEntity<>("Logged out Successfully", HttpStatus.OK);
     }
 
     @GetMapping("/users/all")

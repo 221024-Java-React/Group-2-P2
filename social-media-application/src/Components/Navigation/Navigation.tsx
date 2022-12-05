@@ -12,13 +12,20 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, NavItem, NavLink } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from "react-router";
 
 const Navigation = () => {
 
+    const navigate = useNavigate();
+
+
   const logoutHandler = () => {
 
-    // axios.get("http://localhost:8090/logout");
-    
+  const cookie = document.cookie.slice(8);
+  axios.get("http://localhost:8090/log-out/" + cookie).then((response) => {
+        console.log(response);
+        return navigate("/login");
+    });
   }
 
   return (
