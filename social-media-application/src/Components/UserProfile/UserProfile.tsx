@@ -12,7 +12,6 @@ import { useState, useEffect } from 'react';
 import { User } from '../../Util/Users';
 
 const UserProfile = () => {
-
   // const userPosts = posts.map((postData : PostData) => {
   //   return (postData.userid == userid) ? <Post key={postData.id} post={postData} /> : null;
   // });
@@ -21,34 +20,28 @@ const UserProfile = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-
     // axios.get("http://localhost:8090/user/info").then((response) => {
 
     //   // setPosts(response.data);
 
     // });
 
-    axios.get("http://localhost:8090/posts/all").then((response) => {
-
+    axios.get('http://localhost:8090/posts/all').then((response) => {
       setPosts(response.data);
-
-
     });
   }, []);
 
-  const userPosts = posts.map((postData : PostData) => {
+  const userPosts = posts.map((postData: PostData) => {
     return <Post key={postData.id} post={postData} />;
   });
 
   return (
     <>
       <Navigation />
-      <ProfileBanner profileName={""} />
+      <ProfileBanner profileName={''} />
       <StatusBar />
-      <AboutMe />
-      <PostContainer>
-        {/* {userPosts} */}
-      </PostContainer>
+      <AboutMe about={''} />
+      <PostContainer>{/* {userPosts} */}</PostContainer>
     </>
   );
 };

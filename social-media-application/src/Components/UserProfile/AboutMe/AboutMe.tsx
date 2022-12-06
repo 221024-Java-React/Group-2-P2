@@ -1,7 +1,6 @@
-import React from 'react';
 import './AboutMe.css';
 
-const AboutMe = () => {
+const AboutMe: React.FC<{ about: Object }> = ({}) => {
   return (
     <div className='about-me'>
       <h2>About Me</h2>
