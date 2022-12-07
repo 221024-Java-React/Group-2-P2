@@ -1,12 +1,12 @@
-import React from 'react';
-import Post from '../Post/Post';
-import './PostContainer.css';
+import { FC } from "react";
 
-const PostContainer = (props : any) => {
+import "./PostContainer.css";
+
+const PostContainer: FC<{ children: JSX.Element[] }> = ({ children }) => {
   return (
-    <div className='post-container'>
+    <div className="post-container">
       <h2 hidden>Posts</h2>
-      {props.children}
+      {children}
     </div>
   );
 };

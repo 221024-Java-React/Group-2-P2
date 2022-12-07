@@ -1,47 +1,44 @@
-import React from 'react';
-import AboutMe from './AboutMe/AboutMe';
-import Navigation from '../Navigation/Navigation';
-import ProfileBanner from './ProfileBanner/ProfileBanner';
-import StatusBar from './StatusBar/StatusBar';
-import './UserProfile.css';
-import PostContainer from './Posts/PostContainer/PostContainer';
-import Post from './Posts/Post/Post';
-import { PostData } from '../../Util/Posts';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-import { User } from '../../Util/Users';
+import { useState, useEffect } from "react";
+
+import { axInst } from "../../Util/axInst";
+
+import Navigation from "../Navigation/Navigation";
+import ProfileBanner from "./ProfileBanner/ProfileBanner";
+import StatusBar from "./StatusBar/StatusBar";
+import AboutMe from "./AboutMe/AboutMe";
+import PostContainer from "./Posts/PostContainer/PostContainer";
+import Post from "./Posts/Post/Post";
+import { IPost } from "../../Util/Interfaces/IPost";
+import "./UserProfile.css";
 
 const UserProfile = () => {
-  // const userPosts = posts.map((postData : PostData) => {
-  //   return (postData.userid == userid) ? <Post key={postData.id} post={postData} /> : null;
-  // });
+  const [posts, setPosts] = useState<IPost[]>([]);
 
-  const [user, setUser] = useState();
-  const [posts, setPosts] = useState([]);
+  const getAllPosts = async () => {
+    try {
+      /// NEED FILTERED POSTS ROUTE
+      const { data } = await axInst.get("");
+      setPosts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-    // axios.get("http://localhost:8090/user/info").then((response) => {
-
-    //   // setPosts(response.data);
-
-    // });
-
-    axios.get('http://localhost:8090/posts/all').then((response) => {
-      setPosts(response.data);
-    });
+    getAllPosts();
   }, []);
-
-  const userPosts = posts.map((postData: PostData) => {
-    return <Post key={postData.id} post={postData} />;
-  });
 
   return (
     <>
       <Navigation />
-      <ProfileBanner profileName={''} />
+      <ProfileBanner profileName={""} />
       <StatusBar />
-      <AboutMe about={''} />
-      <PostContainer>{/* {userPosts} */}</PostContainer>
+      <AboutMe about={""} />
+      <PostContainer>
+        {posts.map((postData: IPost) => {
+          return <Post key={postData.id} post={postData} />;
+        })}
+      </PostContainer>
     </>
   );
 };

@@ -1,29 +1,36 @@
-import React from 'react';
-import './Post.css';
-import { User, userid } from '../../../../Util/Users';
-import { PostData } from '../../../../Util/Posts';
-import axios from 'axios';
-import { Console } from 'console';
+import { FC } from "react";
 
-const DELETE_URL = "http://localhost:3000/posts/id?=";
+import { axInst } from "../../../../Util/axInst";
 
-const Post : React.FC<{post : PostData}> = ({post}) => {
+import { userId } from "../../../../Util/Interfaces/User";
+import { IPost } from "../../../../Util/Interfaces/IPost";
+import "./Post.css";
 
+const Post: FC<{ post: IPost }> = ({ post }) => {
   const deleteHandler = () => {
-    //axios.delete(DELETE_URL + post.userid);
+    // TO DO: Delete post on frontend
+
+    // Delete post on backend
+    axInst.delete("/delete", {
+      params: {
+        id: post.id,
+      },
+    });
   };
 
   return (
-    <div className='post'>
-      <div className='post-header'>
-        <img src='' alt='Profile Pic' />
+    <div className="post">
+      <div className="post-header">
+        <img src="" alt="Profile Pic" />
         <div>
           <h3>{post.profileName}</h3>
           <p>{post.creationTime}</p>
         </div>
       </div>
       <p>{post.content}</p>
-      { post.userid === userid ? <button onClick={deleteHandler}>Delete</button> : null }
+      {post.userId === userId && (
+        <button onClick={deleteHandler}>Delete</button>
+      )}
     </div>
   );
 };
