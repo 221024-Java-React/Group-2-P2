@@ -1,50 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import Navigation from '../Navigation/Navigation';
-import Post from '../UserProfile/Posts/Post/Post';
-import PostContainer from '../UserProfile/Posts/PostContainer/PostContainer';
-import { PostData } from '../../Util/Posts';
-import axios from 'axios';
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+
+import { axInst } from "../../Util/axInst";
+
+import Navigation from "../Navigation/Navigation";
 import StatusBar from "../UserProfile/StatusBar/StatusBar";
+import PostContainer from "../UserProfile/Posts/PostContainer/PostContainer";
+import Post from "../UserProfile/Posts/Post/Post";
+import { IPost } from "../../Util/Interfaces/IPost";
 
 const Home = () => {
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const getUserSession = async () => {
+    try {
+      await axInst.get("/", {
+        withCredentials: true,
+        headers: {
+          Cookie: `sessionCookie=${document.cookie.slice(8)}`,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      return navigate("/login");
+    }
+  };
 
-    type CreateUserResponse = {
-        cookie: string;
-      };
-
-  const [posts, setPosts] = useState([]);
-  const cookie = document.cookie.slice(8);
+  const getAllPosts = async () => {
+    try {
+      const { data } = await axInst.get("/posts/all");
+      setPosts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-
-    axios.get("http://localhost:8090/" + cookie).then((response) => {
-
-    }).catch(e => {
-        return navigate("/login");
-    });
-
-    axios.get("http://localhost:8090/posts/all").then((response) => {
-      setPosts(response.data);
-    });
-
+    getUserSession();
+    getAllPosts();
   }, []);
-
-  const userPosts = posts.map((postData : PostData) => {
-    return <Post key={postData.id} post={postData} />;
-  });
 
   return (
     <>
-        <Navigation />
-        <StatusBar />
-        <PostContainer>
-          {userPosts}
-        </PostContainer>
+      <Navigation />
+      <StatusBar />
+      <PostContainer>
+        {posts.map((postData: IPost) => {
+          return <Post key={postData.id} post={postData} />;
+        })}
+      </PostContainer>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
