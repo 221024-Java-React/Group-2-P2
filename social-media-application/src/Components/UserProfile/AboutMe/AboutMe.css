@@ -1,7 +1,6 @@
 .about-me {
-  border: 3px solid white;
-  box-shadow: 0 0 8px black;
+  box-shadow: 0 0 5px 2px var(--secondary-theme);
   margin: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 15px;
+  padding: .5rem 2rem;
+  border-radius: 5px;
 }

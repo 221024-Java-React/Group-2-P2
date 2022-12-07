@@ -1,0 +1,32 @@
+.banner {
+  width: 100vw;
+  height: 25vh;
+  margin: 1rem auto;
+  background-image: linear-gradient(80deg, var(--secondary-theme), white);
+  box-shadow: 0 0 10px white, 0 0 5px var(--secondary-theme);
+}
+
+.banner-info {
+  display: flex;
+  align-items: center;
+}
+
+.banner-info img {
+  width: 125px;
+  border-radius: 100px;
+  margin: 1.5rem;
+}
+
+.banner-info h1 {
+  font-size: 2.5rem;
+}
+
+.banner button {
+  float: right;
+  margin-right: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 0 8px black;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  background: white;
+}
