@@ -1,5 +1,5 @@
 
-export const userid = 0;
+export const userId = 0;
 
 export interface User {
     id: number,

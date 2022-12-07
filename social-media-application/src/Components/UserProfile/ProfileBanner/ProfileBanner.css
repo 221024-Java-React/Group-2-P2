@@ -9,16 +9,19 @@
 .banner-info {
   display: flex;
   align-items: center;
+  color: white;
 }
 
 .banner-info img {
   width: 125px;
   border-radius: 100px;
   margin: 1.5rem;
+  box-shadow: -2px 1px 0px 2px black;
 }
 
 .banner-info h1 {
   font-size: 2.5rem;
+  text-shadow: -2px 1px black;
 }
 
 .banner button {

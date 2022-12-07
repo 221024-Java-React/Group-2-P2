@@ -3,5 +3,5 @@ export interface PostData {
     creationTime: number[],
     id: number,
     profileName: string,
-    userid: number
+    userId: number
 };
