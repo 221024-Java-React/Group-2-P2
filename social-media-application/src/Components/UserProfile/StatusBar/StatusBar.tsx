@@ -1,7 +1,7 @@
 import React from 'react';
 import './StatusBar.css';
 import axios from 'axios';
-import { userid } from '../../../Util/Users';
+import { userId } from '../../../Util/Users';
 import { useNavigate } from "react-router";
 
 const STATUS_POST_URL = "http://localhost:8090/posts/create/";
@@ -17,7 +17,7 @@ const StatusBar = () => {
     event.preventDefault();
 
     axios.post(STATUS_POST_URL + cookie, {
-      userid: userid,
+      userId: userId,
       content: event.target[0].value
     }).then(() => {
         return navigate(0);

@@ -1,6 +1,20 @@
 /* VARS */
 
 :root {
-  --primary-theme: rgb(214, 79, 79);
-  --secondary-theme: rgb(65, 192, 118);
+
+/* #FFCB59 */
+
+/* --primary-theme: #FF8800;
+--secondary-theme: #00B4FF; */
+
+/* --primary-theme: #FFB000;
+--secondary-theme: #005AFF; */
+
+--primary-theme: #FFB000;
+--secondary-theme: #1F6DFF;
+--third-theme: #E7E7E7; /*#EEEEEE;*/
+--fourth-theme: #F7F7F7; /* #ABC8FF */
+
+/* #3BFF6C */
+
 }
