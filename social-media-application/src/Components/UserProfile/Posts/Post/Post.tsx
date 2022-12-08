@@ -7,6 +7,7 @@ import { IPost } from "../../../../Util/Interfaces/IPost";
 import "./Post.css";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
+  
   const deleteHandler = () => {
     // TO DO: Delete post on frontend
 

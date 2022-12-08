@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 
 import { axInst } from "../../Util/axInst";
 
@@ -11,21 +10,6 @@ import { IPost } from "../../Util/Interfaces/IPost";
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
-  const navigate = useNavigate();
-
-  const getUserSession = async () => {
-    try {
-      await axInst.get("/", {
-        withCredentials: true,
-        headers: {
-          Cookie: `sessionCookie=${document.cookie.slice(8)}`,
-        },
-      });
-    } catch (e) {
-      console.log(e);
-      return navigate("/login");
-    }
-  };
 
   const getAllPosts = async () => {
     try {
@@ -37,7 +21,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getUserSession();
     getAllPosts();
   }, []);
 
