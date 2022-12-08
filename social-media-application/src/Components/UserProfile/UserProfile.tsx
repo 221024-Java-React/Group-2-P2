@@ -10,6 +10,7 @@ import PostContainer from "./Posts/PostContainer/PostContainer";
 import Post from "./Posts/Post/Post";
 import { IPost } from "../../Util/Interfaces/IPost";
 import "./UserProfile.css";
+import axios from "axios";
 
 const UserProfile = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -17,8 +18,10 @@ const UserProfile = () => {
   const getAllPosts = async () => {
     try {
       /// NEED FILTERED POSTS ROUTE
-      const { data } = await axInst.get("");
+      // const userId = 0; // TODO get user id
+      const { data } = await axInst.get("/posts/all");
       setPosts(data);
+
     } catch (e) {
       console.log(e);
     }
