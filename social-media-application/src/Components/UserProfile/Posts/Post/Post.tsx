@@ -7,6 +7,7 @@ import { IPost } from "../../../../Util/Interfaces/IPost";
 import "./Post.css";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
+  
   const deleteHandler = () => {
     // TO DO: Delete post on frontend
 
@@ -23,8 +24,8 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
       <div className="post-header">
         <img src="" alt="Profile Pic" />
         <div>
-          <h3>{props.post.profileName}</h3>
-          <p>{props.post.creationTime}</p>
+          <h3>{post.profileName}</h3>
+          <p>{post.creationTime}</p>
         </div>
       </div>
       <p>{post.content}</p>

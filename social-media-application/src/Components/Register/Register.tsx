@@ -8,18 +8,20 @@ import "./Register.css";
 const Register = () => {
   const navigate = useNavigate();
 
-  const registerHandler = (event: any) => {
+  const registerHandler = async (event: any) => {
     event.preventDefault();
 
-    axInst
-      .post("/users/register", {
+    try {
+      await axInst.post("/users/register", {
         profileName: event.target[0].value,
         email: event.target[1].value,
         password: event.target[2].value,
-      })
-      .then(() => {
-        return navigate("/login");
       });
+
+      navigate("/login");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

@@ -1,33 +1,62 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from "react";
+import { useNavigate } from "react-router";
 
+import { axInst } from "../Util/axInst";
+
+// Init context object
 const context = {
-    loggedIn:false,
-    login: (cookie : string) => {},
-    logout: () => {}
-}
+  loggedIn: false,
+  login: (email: string, password: string) => {},
+  logout: () => {},
+};
 
-const AuthContext = React.createContext(context);
+// React component we return in AuthContextProvider
+export const AuthContext = React.createContext(context);
 
-const AuthContextProvider = (children : any) => {
+// Driver Function
+const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [cookie, setCookie] = useState<string>("");
+  const navigate = useNavigate();
 
-    const [loggedIn, setLoggedIn] = useState(false);
+  const loginHandler = async (email: string, password: string) => {
+    try {
+      const { data } = await axInst.post("login", {
+        email,
+        password,
+      });
 
-    const loginHandler = (cookie : string) => {
-        setLoggedIn(true);
-    };
+      document.cookie = `SESSION=${data}`;
 
-    const logoutHandler = () => {
-        setLoggedIn(false);
-    };
-
-    const contextValue = {
-        loggedIn: false,
-        cookie: "",
-        login: loginHandler,
-        logout: logoutHandler
+      setCookie(data);
+      setLoggedIn(true);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
     }
+  };
 
-    return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-}
+  const logoutHandler = async () => {
+    try {
+      await axInst.get(`/log-out/${document.cookie.slice(8)}`);
+
+      document.cookie = "SESSION=; Max-Age=-99999999;"; 
+      setLoggedIn(false);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const contextValue = {
+    loggedIn,
+    login: loginHandler,
+    logout: logoutHandler,
+  };
+
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
+};
 
 export default AuthContextProvider;

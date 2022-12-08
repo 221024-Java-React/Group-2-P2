@@ -1,25 +1,18 @@
-import { useNavigate } from "react-router";
-
-import { axInst } from "../../Util/axInst";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
 import Navigation from "../Navigation/Navigation";
 import "./Login.css";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const loginHandler = (event: any) => {
     event.preventDefault();
+    const email = event.target[0].value;
+    const password = event.target[1].value;
 
-    axInst
-      .post("login", {
-        email: event.target[0].value,
-        password: event.target[1].value,
-      })
-      .then(response => {
-        document.cookie = `SESSION=${response.data}`;
-        return navigate("/");
-      });
+    login(email, password);
   };
 
   return (
