@@ -10,7 +10,6 @@ import PostContainer from "./Posts/PostContainer/PostContainer";
 import Post from "./Posts/Post/Post";
 import { IPost } from "../../Util/Interfaces/IPost";
 import "./UserProfile.css";
-import axios from "axios";
 
 const UserProfile = () => {
   const [posts, setPosts] = useState<IPost[]>([]);

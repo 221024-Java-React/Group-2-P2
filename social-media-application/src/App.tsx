@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { AuthContext } from "./Context/AuthContext";
+// import { useContext } from "react";
+// import { AuthContext } from "./Context/AuthContext";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./Components/Home/Home";
@@ -9,21 +9,15 @@ import UserProfile from "./Components/UserProfile/UserProfile";
 import "./App.css";
 
 function App() {
-  const { loggedIn } = useContext(AuthContext);
+  // const { loggedIn } = useContext(AuthContext);
 
   return (
     <Routes>
-      {loggedIn ? (
-        <>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<UserProfile />} />
-        </>
-      ) : (
-        <>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </>
-      )}
+      <Route path="/" element={<Home />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="*" element={<Login />} />
     </Routes>
   );
 }
