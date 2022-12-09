@@ -1,10 +1,12 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 
 import Navigation from "../Navigation/Navigation";
 import "./Login.css";
 
 const Login = () => {
+  // const [email, setEmail] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
   const { login } = useContext(AuthContext);
 
   const loginHandler = (event: any) => {

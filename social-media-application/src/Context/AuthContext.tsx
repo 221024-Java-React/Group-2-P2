@@ -16,19 +16,17 @@ export const AuthContext = React.createContext(context);
 // Driver Function
 const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [cookie, setCookie] = useState<string>("");
   const navigate = useNavigate();
 
   const loginHandler = async (email: string, password: string) => {
     try {
-      const { data } = await axInst.post("login", {
+      const { data } = await axInst.post("/login", {
         email,
         password,
       });
 
       document.cookie = `SESSION=${data}`;
 
-      setCookie(data);
       setLoggedIn(true);
       navigate("/");
     } catch (e) {
@@ -42,7 +40,7 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 
       document.cookie = "SESSION=; Max-Age=-99999999;"; 
       setLoggedIn(false);
-      navigate("/");
+      navigate("/logout");
     } catch (e) {
       console.log(e);
     }
