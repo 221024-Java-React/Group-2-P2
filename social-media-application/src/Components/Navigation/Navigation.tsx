@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,16 +19,16 @@ const Navigation = () => {
 
   return (
     <div className="navbar">
-      <a href="/" className="navbar-brand">
+      <Link to="/" className="navbar-brand">
         <FontAwesomeIcon icon={faPeopleRobbery} className="logo" />
         <h1>TimeBandit</h1>
-      </a>
+      </Link>
       {loggedIn && (
         <div className="nav">
           <input type="text" name="search" placeholder="Search" />
-          <a href="/profile">
+          <Link to="/profile">
             <FontAwesomeIcon className="icon" icon={faUser} />
-          </a>
+          </Link>
           <FontAwesomeIcon
             className="icon"
             icon={faDoorOpen}
