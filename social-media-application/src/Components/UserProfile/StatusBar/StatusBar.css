@@ -6,7 +6,7 @@
 .status-bar textarea {
   resize: none;
   border-radius: 15px;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: var(--fourth-theme);
 }
 
@@ -21,7 +21,8 @@
   border-radius: 20px;
   box-shadow: 0 0 8px black;
   border: none;
-  padding: .25rem .75rem;
+  padding: 0.25rem 0.75rem;
   background: none;
   background-color: var(--fourth-theme);
+  cursor: pointer;
 }
