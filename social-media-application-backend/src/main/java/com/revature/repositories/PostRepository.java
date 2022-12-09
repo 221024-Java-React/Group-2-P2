@@ -15,8 +15,8 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
     @Query(value = "SELECT * FROM posts p ORDER BY p.creation_time DESC", nativeQuery = true)
     List<Post> findAllPosts();
 
-    // @Query(value = "SELECT * FROM posts p WHERE user_posts.post_id = ?1 ORDER BY p.creation_time DESC", nativeQuery = true)
-    // List<Post> findAllUserPosts(int id);
+    @Query(value = "SELECT * FROM posts p WHERE p.user_id = ?1 ORDER BY p.creation_time DESC", nativeQuery = true)
+    List<Post> findAllUserPosts(int id);
 
     @Modifying
     @Query(value = "DELETE FROM user_posts WHERE user_posts.post_id = ?1", nativeQuery = true)
