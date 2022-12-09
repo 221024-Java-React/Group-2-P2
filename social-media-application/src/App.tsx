@@ -15,7 +15,7 @@ function App() {
     if (!loggedIn) {
       verifyUser();
     }
-  }, []);
+  }, [loggedIn, verifyUser]);
 
   return (
     <Routes>
