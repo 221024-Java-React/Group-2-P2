@@ -7,9 +7,6 @@ import { IPost } from "../../../../Util/Interfaces/IPost";
 import "./Post.css";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
-  // const date = new Date(2022126121615588529000);
-  // console.log(date);
-
   const deleteHandler = () => {
     // TO DO: Delete post on frontend
 
