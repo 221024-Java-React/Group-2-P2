@@ -1,5 +1,5 @@
-// import { useContext } from "react";
-// import { AuthContext } from "./Context/AuthContext";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "./Context/AuthContext";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./Components/Home/Home";
@@ -9,15 +9,29 @@ import UserProfile from "./Components/UserProfile/UserProfile";
 import "./App.css";
 
 function App() {
-  // const { loggedIn } = useContext(AuthContext);
+  const { loggedIn, verifyUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      verifyUser();
+    }
+  }, []);
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="*" element={<Login />} />
+      {loggedIn && (
+        <>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<UserProfile />} />
+        </>
+      )}
+      {!loggedIn && (
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </>
+      )}
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 }

@@ -8,6 +8,7 @@ const context = {
   loggedIn: false,
   login: (email: string, password: string) => {},
   logout: () => {},
+  verifyUser: () => {},
 };
 
 // React component we return in AuthContextProvider
@@ -38,11 +39,17 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     try {
       await axInst.get(`/log-out/${document.cookie.slice(8)}`);
 
-      document.cookie = "SESSION=; Max-Age=-99999999;"; 
+      document.cookie = "SESSION=; Max-Age=-99999999;";
       setLoggedIn(false);
-      navigate("/logout");
+      navigate("/login");
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const verifyUser = () => {
+    if (document.cookie.slice(8)) {
+      setLoggedIn(true);
     }
   };
 
@@ -50,6 +57,7 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     loggedIn,
     login: loginHandler,
     logout: logoutHandler,
+    verifyUser,
   };
 
   return (
