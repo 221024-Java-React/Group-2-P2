@@ -38,10 +38,10 @@ public class PostController {
         return new ResponseEntity<>(this.postService.findAllPosts(), HttpStatus.OK);
     }
 
-    // @GetMapping("/all/{id}")
-    // public ResponseEntity<List<Post>> findAllUserPosts(@PathVariable("id") int id) {
-    //     return new ResponseEntity<>(this.postService.findAllUserPosts(id), HttpStatus.OK);
-    // }
+    @GetMapping("/all/{id}")
+    public ResponseEntity<List<Post>> findAllUserPosts(@PathVariable("id") int id) {
+        return new ResponseEntity<>(this.postService.findAllUserPosts(id), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> findPostById(@PathVariable("id") int id) {

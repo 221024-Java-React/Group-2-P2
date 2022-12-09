@@ -40,9 +40,9 @@ public class PostService {
         return postRepository.findAllPosts();
     }
 
-    // public List<Post> findAllUserPosts(int id) {
-    //     return postRepository.findAllUserPosts(id);
-    // }
+    public List<Post> findAllUserPosts(int id) {
+        return postRepository.findAllUserPosts(id);
+    }
 
     public Post findPostById(int id) {
         Optional<Post> post = postRepository.findById(id);
