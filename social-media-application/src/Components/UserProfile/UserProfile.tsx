@@ -17,8 +17,8 @@ const UserProfile = () => {
   const getAllPosts = async () => {
     try {
       /// NEED FILTERED POSTS ROUTE
-      // const userId = 0; // TODO get user id
-      const { data } = await axInst.get("/posts/all");
+      const userId = 1; // TODO get user id
+      const { data } = await axInst.get("/posts/all/" + userId);
       setPosts(data);
 
     } catch (e) {
