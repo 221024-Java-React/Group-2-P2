@@ -1,6 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router";
-import { AuthContext } from "../../Context/AuthContext";
+import { useEffect, useState } from "react";
 
 import { axInst } from "../../Util/axInst";
 
@@ -12,8 +10,6 @@ import { IPost } from "../../Util/Interfaces/IPost";
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
-  const { loggedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const getAllPosts = async () => {
     try {
@@ -25,10 +21,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!document.cookie.slice(8)) {
-      navigate("/login");
-    }
-
     getAllPosts();
   }, []);
 
