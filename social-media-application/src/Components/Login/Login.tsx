@@ -5,14 +5,20 @@ import Navigation from "../Navigation/Navigation";
 import "./Login.css";
 
 const Login = () => {
-  // const [email, setEmail] = useState<string>("");
-  // const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const { login } = useContext(AuthContext);
+
+  const emailChangeHandler = (event: any) => {
+    setEmail(event.target.value);
+  };
+
+  const passwordChangeHandler = (event: any) => {
+    setPassword(event.target.value);
+  };
 
   const loginHandler = (event: any) => {
     event.preventDefault();
-    const email = event.target[0].value;
-    const password = event.target[1].value;
 
     login(email, password);
   };
@@ -23,8 +29,20 @@ const Login = () => {
       <div className="login">
         <h1>Login</h1>
         <form onSubmit={loginHandler}>
-          <input type="text" name="email" placeholder="Email" />
-          <input type="password" name="password" placeholder="Password" />
+          <input
+            type="text"
+            name="email"
+            value={email}
+            placeholder="Email"
+            onChange={emailChangeHandler}
+          />
+          <input
+            type="password"
+            name="password"
+            value={password}
+            placeholder="Password"
+            onChange={passwordChangeHandler}
+          />
           <button type="submit">Login</button>
         </form>
         <div className="member">
