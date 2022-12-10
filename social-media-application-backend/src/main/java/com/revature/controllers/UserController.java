@@ -2,7 +2,6 @@ package com.revature.controllers;
 
 import java.util.Base64;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -75,9 +74,9 @@ public class UserController {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/users/sessions")
-    public ResponseEntity<Set<Integer>> getActiveSessions() {
-        return new ResponseEntity<>(this.userService.getActiveSessions(), HttpStatus.OK);
+    @GetMapping("/users/onlineUsers")
+    public ResponseEntity<List<User>> getOnlineUsers() {
+        return new ResponseEntity<>(this.userService.getOnlineUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/users/profilename/{profileName}")
