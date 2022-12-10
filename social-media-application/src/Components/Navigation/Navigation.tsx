@@ -7,6 +7,7 @@ import {
   faUser,
   faPeopleRobbery,
   faDoorOpen,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navigation.css";
 
@@ -26,6 +27,9 @@ const Navigation = () => {
       {loggedIn && (
         <div className="nav">
           <input type="text" name="search" placeholder="Search" />
+          <Link to="/search">
+            <FontAwesomeIcon className="icon" icon={faSearch} />
+          </Link>
           <Link to="/profile">
             <FontAwesomeIcon className="icon" icon={faUser} />
           </Link>

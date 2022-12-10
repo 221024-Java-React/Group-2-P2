@@ -4,11 +4,14 @@ import { AuthContext } from "../../Context/AuthContext";
 
 import { axInst } from "../../Util/axInst";
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 import Navigation from "../Navigation/Navigation";
 import StatusBar from "../UserProfile/StatusBar/StatusBar";
 import PostContainer from "../UserProfile/Posts/PostContainer/PostContainer";
 import Post from "../UserProfile/Posts/Post/Post";
 import { IPost } from "../../Util/Interfaces/IPost";
+import OnlineUsers from "../OnlineUsers/OnlineUsers";
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -25,7 +28,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!document.cookie.slice(8)) {
+    if (!loggedIn) {
       navigate("/login");
     }
 
@@ -36,11 +39,18 @@ const Home = () => {
     <>
       <Navigation />
       <StatusBar />
-      <PostContainer>
-        {posts.map((postData: IPost) => {
-          return <Post key={postData.id} post={postData} />;
-        })}
-      </PostContainer>
+        <div className="row mt-2">
+            <div className="col-10">
+                <PostContainer>
+                    {posts.map((postData: IPost) => {
+                    return <Post key={postData.id} post={postData} />;
+                    })}
+                </PostContainer>
+            </div>
+        <div className="col-2">
+            <OnlineUsers />
+        </div>
+        </div>
     </>
   );
 };

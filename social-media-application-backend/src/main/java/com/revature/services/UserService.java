@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public List<User> findUsersByProfileName(String profileName) {
-        List<User> users = userRepository.findUsersByProfileName(profileName);
+        List<User> users = userRepository.findUsersByProfileName(profileName.toLowerCase());
         List<User> returnedUsers = new ArrayList<>();
         for(User u : users) {
             returnedUsers.add(new User(u.getProfileName(), u.getId(), u.getPosts()));
@@ -73,9 +73,10 @@ public class UserService {
         }
     }
 
-    public Set<Integer> getActiveSessions() {
+    public List<User> getOnlineUsers() {
         List<byte[]> sessionsAttributes = new ArrayList<>(userRepository.getSpringSessionAttributes());
         Set<Integer> currentSessions = new HashSet<>();
+        List<User> users = new ArrayList<>();
 
         for(byte[] s : sessionsAttributes) {
             ObjectInput in;
@@ -88,7 +89,12 @@ public class UserService {
                 e.printStackTrace();
             }
         }
-        return currentSessions;
+
+        for(int i : currentSessions) {
+            users.add(findUserById(i));
+        }
+
+        return users;
     }
 
     public int getSessionAttributesById(String id) {

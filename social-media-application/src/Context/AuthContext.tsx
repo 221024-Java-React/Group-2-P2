@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, FC } from "react";
 import { useNavigate } from "react-router";
 
@@ -48,9 +49,16 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   };
 
   const verifyUser = () => {
-    if (document.cookie.slice(8)) {
-      setLoggedIn(true);
-    }
+
+    axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
+        console.log(response);
+        setLoggedIn(true);
+    }).catch(e => {
+        setLoggedIn(false);
+    });
+    // if (document.cookie.slice(8)) {
+    //   setLoggedIn(true);
+    // }
   };
 
   const contextValue = {
