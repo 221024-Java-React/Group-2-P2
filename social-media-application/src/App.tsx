@@ -10,12 +10,14 @@ import SearchUsers from "./Components/SearchUsers/SearchUsers";
 import "./App.css";
 
 function App() {
-  const { loggedIn, verifyUser } = useContext(AuthContext);
+  const { loggedIn, isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!loggedIn) {
-      verifyUser();
-    }
+    // if (!) {
+    //   isLoggedIn();
+    //   // verifyUser();
+    // }
+    isLoggedIn();
   }, []);
 
   return (

@@ -7,10 +7,10 @@ import { axInst } from "../Util/axInst";
 // Init context object
 const context = {
   loggedIn: false,
-  searchInput: "",
+  users: [],
   login: (email: string, password: string) => {},
   logout: () => {},
-  verifyUser: () => {},
+  isLoggedIn: () : boolean => { return false; },
   search: (input : string) => {},
 };
 
@@ -20,7 +20,7 @@ export const AuthContext = React.createContext(context);
 // Driver Function
 const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [searchInput, setSearchInput] = useState<string>("");
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const loginHandler = async (email: string, password: string) => {
@@ -51,22 +51,36 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     }
   };
 
-  const verifyUser = () => {
+  const isLoggedInHandler = () : boolean => {
 
-    axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
-        console.log(response);
-        setLoggedIn(true);
-    }).catch(e => {
-        setLoggedIn(false);
-    });
-    // if (document.cookie.slice(8)) {
-    //   setLoggedIn(true);
-    // }
+    console.log("verifying user");
+
+    // axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
+    //     console.log(response);
+    //     setLoggedIn(true);
+    // }).catch(e => {
+    //     setLoggedIn(false);
+    // });
+    if (document.cookie.slice(8)) {
+      setLoggedIn(true);
+      return true;
+    }
+    else
+      return false;
   };
 
   const searchHandler = async (input: string) => {
+
     try {
-      setSearchInput(input);
+      const link : string = "http://localhost:8090/users/profilename/" + input;
+
+        axios.get(link).then((response) => {
+            console.log(response.data);
+            setUsers(response.data);
+        }).catch(e => {
+
+        });
+
       navigate("/search");
     } catch (e) {
       console.log(e);
@@ -75,10 +89,10 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 
   const contextValue = {
     loggedIn,
-    searchInput,
+    users,
     login: loginHandler,
     logout: logoutHandler,
-    verifyUser,
+    isLoggedIn: isLoggedInHandler,
     search: searchHandler,
   };
 

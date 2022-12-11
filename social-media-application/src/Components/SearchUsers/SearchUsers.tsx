@@ -10,23 +10,15 @@ import { User } from "../../Util/Interfaces/User";
 import axios from "axios";
 
 const SearchUsers = () => {
-    const [users, setUsers] = useState([]);
-  const { loggedIn, searchInput } = useContext(AuthContext);
+  const { loggedIn, isLoggedIn, users } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    isLoggedIn();
+
     if (!loggedIn) {
       navigate("/login");
-    } else {
-
-      const link : string = "http://localhost:8090/users/profilename/" + searchInput;
-
-        axios.get(link).then((response) => {
-            console.log(response.data);
-            setUsers(response.data);
-        }).catch(e => {
-
-        });
     }
 
   }, []);

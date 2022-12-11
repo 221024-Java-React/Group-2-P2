@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navigation.css";
 
+
+
 const Navigation = () => {
 
   const { loggedIn, logout, search } = useContext(AuthContext);
@@ -22,11 +24,9 @@ const Navigation = () => {
   const searchHandler = (event : any) => {
     event.preventDefault();
 
-    console.log(event);
-    // const email = event.target[0].value;
-    // const password = event.target[1].value;
+    console.log("submitted");
 
-    // login(email, password);
+    console.log(event);
 
     search(event.target[0].value);
   };
