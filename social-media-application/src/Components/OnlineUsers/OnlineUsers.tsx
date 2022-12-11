@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react'
 import { User } from "../../Util/Interfaces/User";
+import OnlineUser from "./OnlineUser";
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "./OnlineUsers.css";
 import { Link } from "react-router-dom";
 
 const OnlineUsers = () => {
@@ -21,14 +22,12 @@ const OnlineUsers = () => {
 
   return (
     <>
-    {data.map((user: User) => {
-                    return (
-                        <Link to={"/profile"} className="row border border-dark mb-2" key={user.id}>
-                            <div className="col-1">{user.id}</div>
-                            <div className="col-11">{user.profileName}</div>
-                        </Link>
-                    )
-                    })}
+      <h2>Online Users</h2>
+      <div className="users">
+        {data.map((user: User) => {
+            return <OnlineUser user={user}></OnlineUser>
+          })}
+      </div>
     </>
   )
 }
