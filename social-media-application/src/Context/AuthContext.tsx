@@ -7,9 +7,11 @@ import { axInst } from "../Util/axInst";
 // Init context object
 const context = {
   loggedIn: false,
+  searchInput: "",
   login: (email: string, password: string) => {},
   logout: () => {},
   verifyUser: () => {},
+  search: (input : string) => {},
 };
 
 // React component we return in AuthContextProvider
@@ -18,6 +20,7 @@ export const AuthContext = React.createContext(context);
 // Driver Function
 const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
   const navigate = useNavigate();
 
   const loginHandler = async (email: string, password: string) => {
@@ -61,11 +64,22 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     // }
   };
 
+  const searchHandler = async (input: string) => {
+    try {
+      setSearchInput(input);
+      navigate("/search");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const contextValue = {
     loggedIn,
+    searchInput,
     login: loginHandler,
     logout: logoutHandler,
     verifyUser,
+    search: searchHandler,
   };
 
   return (

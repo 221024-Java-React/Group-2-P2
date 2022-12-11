@@ -12,10 +12,23 @@ import {
 import "./Navigation.css";
 
 const Navigation = () => {
-  const { loggedIn, logout } = useContext(AuthContext);
+
+  const { loggedIn, logout, search } = useContext(AuthContext);
 
   const logoutHandler = () => {
     logout();
+  };
+
+  const searchHandler = (event : any) => {
+    event.preventDefault();
+
+    console.log(event);
+    // const email = event.target[0].value;
+    // const password = event.target[1].value;
+
+    // login(email, password);
+
+    search(event.target[0].value);
   };
 
   return (
@@ -26,10 +39,13 @@ const Navigation = () => {
       </Link>
       {loggedIn && (
         <div className="nav">
-          <input type="text" name="search" placeholder="Search" />
-          <Link to="/search">
-            <FontAwesomeIcon className="icon" icon={faSearch} />
-          </Link>
+          <form onSubmit={searchHandler}>
+            <input type="text" name="search" placeholder="Search"></input>
+            <button type="submit">
+                <FontAwesomeIcon className="icon" icon={faSearch} />
+            </button>
+          </form>
+          
           <Link to="/profile">
             <FontAwesomeIcon className="icon" icon={faUser} />
           </Link>
