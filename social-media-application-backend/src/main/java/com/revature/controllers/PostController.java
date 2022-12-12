@@ -79,8 +79,8 @@ public class PostController {
         return new ResponseEntity<>("User Liked Post", HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<HttpStatus> deletePostById(@RequestBody int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deletePostById(@PathVariable int id) {
         System.out.println("deleted " + id);
         postService.deletePostById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
