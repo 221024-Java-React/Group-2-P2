@@ -44,7 +44,7 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
           )}
         </>
       </div>
-    
+    </div>
   );
 };
 
