@@ -35,7 +35,7 @@ const Home = () => {
     }
 
     getAllPosts();
-  }, []);
+  }, [isLoggedIn, loggedInUser.id, navigate]);
 
   return (
     <>

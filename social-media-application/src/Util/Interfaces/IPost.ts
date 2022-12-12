@@ -1,4 +1,4 @@
-import { User } from "./User";
+import { IComment } from "./IComment";
 
 export interface IPost {
   id: number;
@@ -6,5 +6,6 @@ export interface IPost {
   content: string;
   profileName: string;
   userId: number;
-  usersLiked: User;
+  usersLiked: number[];
+  comments: IComment[];
 }
