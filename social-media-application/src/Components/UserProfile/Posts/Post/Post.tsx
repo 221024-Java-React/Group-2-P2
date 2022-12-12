@@ -1,4 +1,5 @@
 import { FC, useContext } from "react";
+import { useNavigate } from "react-router";
 
 import { axInst } from "../../../../Util/axInst";
 
@@ -7,28 +8,30 @@ import "./Post.css";
 
 import { AuthContext } from "../../../../Context/AuthContext";
 import axios from "axios";
+import { Navigate } from "react-router";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
   const { loggedInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const deleteHandler = () => {
-    // TO DO: Delete post on frontend
-
-    // Delete post on backend
-    axInst.delete("/delete", {
-      params: {
-        id: post.id,
-      },
+    axInst.delete(`/posts/delete/${post.id}`).then(() => {
+      return navigate(0);
     });
   };
 
   const likeHandler = () => {
-
-    axios.post("http://localhost:8090/posts/like/" + document.cookie.slice(8) + "/" + post.id ).then((response) => {
+    axios
+      .post(
+        "http://localhost:8090/posts/like/" +
+          document.cookie.slice(8) +
+          "/" +
+          post.id
+      )
+      .then(response => {
         console.log(response);
-    }).catch(e => {
-
-    });
+      })
+      .catch(e => {});
   };
 
   return (
@@ -39,17 +42,17 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
         <div className="content">
           <p>{post.content}</p>
         </div>
-          <p>
-            {post.creationTime[3] +
-              ":" +
-              post.creationTime[4] +
-              " " +
-              post.creationTime[1] +
-              "/" +
-              post.creationTime[2] +
-              "/" +
-              post.creationTime[0]}
-          </p>
+        <p>
+          {post.creationTime[3] +
+            ":" +
+            post.creationTime[4] +
+            " " +
+            post.creationTime[1] +
+            "/" +
+            post.creationTime[2] +
+            "/" +
+            post.creationTime[0]}
+        </p>
         {post.userId !== loggedInUser.id && (
           <div className="responders">
             <button onClick={likeHandler}>Like</button>
