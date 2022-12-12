@@ -19,5 +19,13 @@
   border-radius: 25px;
   color: var(--secondary-theme);
   border: 1px solid var(--primary-theme);
-  margin: .5rem;
+  margin: 0.5rem;
+}
+
+.comment-form > textarea {
+  display: block;
+}
+
+.post-time {
+  text-align: right;
 }
