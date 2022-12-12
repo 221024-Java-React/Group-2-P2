@@ -3,15 +3,25 @@ import React, { useState, FC } from "react";
 import { useNavigate } from "react-router";
 
 import { axInst } from "../Util/axInst";
+import { User } from "../Util/Interfaces/User";
+
+const defaultUser : User = {
+  id: 0,
+  profileName: "",
+  email: "",
+  password: "",
+};
 
 // Init context object
 const context = {
   loggedIn: false,
   users: [],
+  profileUser: defaultUser,
   login: (email: string, password: string) => {},
   logout: () => {},
   isLoggedIn: () : boolean => { return false; },
   search: (input : string) => {},
+  getProfile: (user: User) => {},
 };
 
 // React component we return in AuthContextProvider
@@ -21,6 +31,7 @@ export const AuthContext = React.createContext(context);
 const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [users, setUsers] = useState([]);
+  const [profileUser, setProfileUser] = useState<User>(defaultUser);
   const navigate = useNavigate();
 
   const loginHandler = async (email: string, password: string) => {
@@ -87,13 +98,19 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     }
   };
 
+  const getProfileHandler = async (user: User) => {
+    setProfileUser(user);
+  }
+
   const contextValue = {
     loggedIn,
     users,
+    profileUser,
     login: loginHandler,
     logout: logoutHandler,
     isLoggedIn: isLoggedInHandler,
     search: searchHandler,
+    getProfile: getProfileHandler,
   };
 
   return (

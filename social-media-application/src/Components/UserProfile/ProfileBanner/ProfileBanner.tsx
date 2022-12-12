@@ -1,14 +1,18 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
+import { AuthContext } from "../../../Context/AuthContext";
 
 import MarkPic from "../../../Assets/MarkPic.jpg";
 import "./ProfileBanner.css";
 
-const ProfileBanner: FC<{ profileName: string }> = ({ profileName }) => {
+const ProfileBanner = () => {
+
+  const { profileUser } = useContext(AuthContext);
+
   return (
     <div className="banner">
       <div className="banner-info">
         <img src={MarkPic} alt="Profile Pic" />
-        <h1>{profileName || "Mark Satin"}</h1>
+        <h1>{profileUser.profileName}</h1>
       </div>
       <button>Update Info</button>
     </div>

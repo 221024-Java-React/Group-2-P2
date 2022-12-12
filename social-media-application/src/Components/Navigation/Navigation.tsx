@@ -45,7 +45,6 @@ const Navigation = () => {
                 <FontAwesomeIcon className="icon" icon={faSearch} />
             </button>
           </form>
-          
           <Link to="/profile">
             <FontAwesomeIcon className="icon" icon={faUser} />
           </Link>
