@@ -27,7 +27,7 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
         <img src="" alt="Profile Pic" />
         <div>
           <h3>{post.profileName}</h3>
-          <p>{post.creationTime}</p>
+          <p>{post.creationTime[3] + ":" + post.creationTime[4] + " " + post.creationTime[1] + "/" + post.creationTime[2] + "/" + post.creationTime[0]}</p>
         </div>
       </div>
       <p>{post.content}</p>
