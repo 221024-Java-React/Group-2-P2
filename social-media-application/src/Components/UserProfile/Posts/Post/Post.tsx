@@ -6,6 +6,7 @@ import { IPost } from "../../../../Util/Interfaces/IPost";
 import "./Post.css";
 
 import { AuthContext } from "../../../../Context/AuthContext";
+import axios from "axios";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
   // const date = new Date(2022126121615588529000);
@@ -21,6 +22,15 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
       params: {
         id: post.id,
       },
+    });
+  };
+
+  const likeHandler = () => {
+
+    axios.post("http://localhost:8090/posts/like/" + document.cookie.slice(8) + "/" + post.id ).then((response) => {
+        console.log(response);
+    }).catch(e => {
+
     });
   };
 
@@ -40,7 +50,7 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
         </>
         <>
           {post.userId !== loggedInUser.id && (
-            <button>Like</button>
+            <button onClick={likeHandler}>Like</button>
           )}
         </>
       </div>
