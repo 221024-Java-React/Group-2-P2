@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Post;
+import com.revature.models.User;
 import com.revature.services.PostService;
 import com.revature.services.UserService;
 
@@ -56,8 +59,29 @@ public class PostController {
         return new ResponseEntity<>(postService.createPost(post), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deletePostById(@PathVariable("id") int id) {
+    @PostMapping("/like/{cookieId}/{postId}")
+    public ResponseEntity<String> likePost(@PathVariable String cookieId, @PathVariable int postId) {
+        byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
+        String decodedCookieId = new String(decodedCookieIdBytes);
+        User user = userService.findUserById(userService.getSessionAttributesById(decodedCookieId));
+        Post post = postService.findPostById(postId);
+        List<Integer> users = new ArrayList<>(post.getUsersLiked());
+
+        if(users.contains(user.getId())) {
+            users.remove(Integer.valueOf(user.getId()));
+            post.setUsersLiked(users);
+            postService.update(post);
+            return new ResponseEntity<>("User Unliked Post", HttpStatus.OK);
+        }
+        users.add(user.getId());
+        post.setUsersLiked(users);
+        postService.update(post);
+        return new ResponseEntity<>("User Liked Post", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<HttpStatus> deletePostById(@RequestBody int id) {
+        System.out.println("deleted " + id);
         postService.deletePostById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
