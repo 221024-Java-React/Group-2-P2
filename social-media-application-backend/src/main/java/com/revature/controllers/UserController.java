@@ -36,7 +36,7 @@ public class UserController {
         byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
         String decodedCookieId = new String(decodedCookieIdBytes);
         User user = userService.findUserById(userService.getSessionAttributesById(decodedCookieId));
-        if(userService.getSessionById(userService.getSessionById(decodedCookieId)) != null) {
+        if(userService.getSessionById(decodedCookieId) != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
