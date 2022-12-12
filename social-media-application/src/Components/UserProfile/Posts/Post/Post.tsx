@@ -26,12 +26,11 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
 
   return (
     <div className="post">
-        <div className="post-header">
-          <img src="" alt="Profile Pic" />
-          <div>
-            <h3>{post.profileName}</h3>
-            <p>{post.creationTime}</p>
-          </div>
+      <div className="post-header">
+        <img src="" alt="Profile Pic" />
+        <div>
+          <h3>{post.profileName}</h3>
+          <p>{post.creationTime[3] + ":" + post.creationTime[4] + " " + post.creationTime[1] + "/" + post.creationTime[2] + "/" + post.creationTime[0]}</p>
         </div>
         <p>{post.content}</p>
         <>
