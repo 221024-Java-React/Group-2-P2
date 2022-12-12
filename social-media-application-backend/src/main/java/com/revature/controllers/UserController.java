@@ -32,13 +32,14 @@ public class UserController {
     }
 
     @GetMapping("/{cookieId}")
-    public ResponseEntity<String> checkIfLoggedIn(@PathVariable String cookieId, HttpSession session) {
+    public ResponseEntity<User> checkIfLoggedIn(@PathVariable String cookieId) {
         byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
         String decodedCookieId = new String(decodedCookieIdBytes);
+        User user = userService.findUserById(userService.getSessionAttributesById(decodedCookieId));
         if(userService.getSessionById(decodedCookieId) != null) {
-            return new ResponseEntity<>("Currently Logged In", HttpStatus.OK);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Not Logged In", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
     }
     
