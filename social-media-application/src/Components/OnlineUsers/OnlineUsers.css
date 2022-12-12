@@ -1,7 +1,8 @@
-.users {
-    margin-right: 1em;
-}
-
-.post-container {
-    margin-right: 0;
+.users-container {
+  border: 3px solid white;
+  box-shadow: -1px 1px 0px 2px black;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 15px;
+  background-color: var(--fourth-theme);
 }

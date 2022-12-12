@@ -13,10 +13,6 @@ function App() {
   const { loggedInUser, isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    // if (!) {
-    //   isLoggedIn();
-    //   // verifyUser();
-    // }
     isLoggedIn();
   }, []);
 

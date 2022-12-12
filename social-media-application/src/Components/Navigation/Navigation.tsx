@@ -11,22 +11,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navigation.css";
 
-
-
 const Navigation = () => {
-
   const { loggedInUser, logout, search, getProfile } = useContext(AuthContext);
 
   const logoutHandler = () => {
     logout();
   };
 
-  const searchHandler = (event : any) => {
+  const searchHandler = (event: any) => {
     event.preventDefault();
-
-    console.log("submitted");
-
-    console.log(event);
 
     search(event.target[0].value);
   };
@@ -42,7 +35,7 @@ const Navigation = () => {
           <form onSubmit={searchHandler}>
             <input type="text" name="search" placeholder="Search"></input>
             <button type="submit">
-                <FontAwesomeIcon className="icon" icon={faSearch} />
+              <FontAwesomeIcon className="icon" icon={faSearch} />
             </button>
           </form>
           <Link onClick={() => getProfile(loggedInUser)} to="/profile">

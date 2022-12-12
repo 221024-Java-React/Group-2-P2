@@ -8,9 +8,6 @@ import "./Post.css";
 import { AuthContext } from "../../../../Context/AuthContext";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
-  // const date = new Date(2022126121615588529000);
-  // console.log(date);
-
   const { loggedInUser } = useContext(AuthContext);
 
   const deleteHandler = () => {
@@ -27,20 +24,31 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
   return (
     <div className="post">
       <div className="post-header">
-        <img src="" alt="Profile Pic" />
-        <div>
-          <h3>{post.profileName}</h3>
-          <p>{post.creationTime[3] + ":" + post.creationTime[4] + " " + post.creationTime[1] + "/" + post.creationTime[2] + "/" + post.creationTime[0]}</p>
+        {/* <img src="" alt="Profile Pic" /> */}
+        <h3>{post.profileName}</h3>
+        <div className="content">
+          <p>{post.content}</p>
         </div>
-        <p>{post.content}</p>
+          <p>
+            {post.creationTime[3] +
+              ":" +
+              post.creationTime[4] +
+              " " +
+              post.creationTime[1] +
+              "/" +
+              post.creationTime[2] +
+              "/" +
+              post.creationTime[0]}
+          </p>
+        {post.userId !== loggedInUser.id && (
+          <div className="responders">
+            <button>Like</button>
+            <button>Comment</button>
+          </div>
+        )}
         <>
           {post.userId === loggedInUser.id && (
             <button onClick={deleteHandler}>Delete</button>
-          )}
-        </>
-        <>
-          {post.userId !== loggedInUser.id && (
-            <button>Like</button>
           )}
         </>
       </div>

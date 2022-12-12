@@ -1,11 +1,10 @@
-import axios from "axios";
 import React, { useState, FC } from "react";
 import { useNavigate } from "react-router";
 
 import { axInst } from "../Util/axInst";
 import { User } from "../Util/Interfaces/User";
 
-const defaultUser : User = {
+const defaultUser: User = {
   id: 0,
   profileName: "",
   email: "",
@@ -20,7 +19,7 @@ const context = {
   login: (email: string, password: string) => {},
   logout: () => {},
   isLoggedIn: () => {},
-  search: (input : string) => {},
+  search: (input: string) => {},
   getProfile: (user: User) => {},
 };
 
@@ -62,37 +61,22 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     }
   };
 
-  const isLoggedInHandler = () => {
+  const isLoggedInHandler = async () => {
+    try {
+      const { data } = await axInst.get(`/${document.cookie.slice(8)}`);
 
-    console.log("verifying user");
-
-    axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
-        console.log(response);
-        setLoggedInUser(response.data);
-    }).catch(e => {
-        setLoggedInUser(defaultUser);
-    });
-
-    // if (document.cookie.slice(8)) {
-    //   // setLoggedIn(true);
-    //   return true;
-    // }
-    // else
-    //   return false;
+      setLoggedInUser(data);
+    } catch (e) {
+      console.log(e);
+      setLoggedInUser(defaultUser);
+    }
   };
 
   const searchHandler = async (input: string) => {
-
     try {
-      const link : string = "http://localhost:8090/users/profilename/" + input;
+      const { data } = await axInst.get(`/users/profilename/${input}`);
 
-        axios.get(link).then((response) => {
-            console.log(response.data);
-            setUsers(response.data);
-        }).catch(e => {
-
-        });
-
+      setUsers(data);
       navigate("/search");
     } catch (e) {
       console.log(e);
@@ -101,7 +85,7 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 
   const getProfileHandler = async (user: User) => {
     setProfileUser(user);
-  }
+  };
 
   const contextValue = {
     loggedInUser,

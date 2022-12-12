@@ -5,7 +5,19 @@
   border-radius: 5px;
 }
 
-.post-header {
+.content {
+  background: lightgrey;
+  padding: 1rem;
+}
+
+.responders {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+}
+
+.responders button {
+  border-radius: 25px;
+  color: var(--secondary-theme);
+  border: 1px solid var(--primary-theme);
+  margin: .5rem;
 }

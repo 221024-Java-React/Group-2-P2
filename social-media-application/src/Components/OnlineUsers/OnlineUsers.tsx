@@ -1,35 +1,36 @@
-import axios from "axios";
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
+import { axInst } from "../../Util/axInst";
 import { User } from "../../Util/Interfaces/User";
-import OnlineUser from "./OnlineUser";
 
+import OnlineUser from "./OnlineUser";
 import "./OnlineUsers.css";
-import { Link } from "react-router-dom";
 
 const OnlineUsers = () => {
+  const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
 
-    const [data, setData] = useState([]);
+  const getOnlineUsers = async () => {
+    try {
+      const { data } = await axInst.get("/users/onlineUsers");
+      setOnlineUsers(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    useEffect(() => {
-
-    axios.get("http://localhost:8090/users/onlineUsers").then((response) => {
-        console.log(response.data);
-        setData(response.data);
-    }).catch(e => {
-    });
-
-    }, []);
+  useEffect(() => {
+    getOnlineUsers();
+  }, []);
 
   return (
     <>
       <h2>Online Users</h2>
-      <div className="users">
-        {data.map((user: User) => {
-            return <OnlineUser user={user}></OnlineUser>
-          })}
+      <div className="users-container">
+        {onlineUsers.map((user: User) => {
+          return <OnlineUser key={user.id} user={user}></OnlineUser>;
+        })}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default OnlineUsers
+export default OnlineUsers;
