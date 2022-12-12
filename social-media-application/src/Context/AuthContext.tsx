@@ -14,7 +14,7 @@ const defaultUser : User = {
 
 // Init context object
 const context = {
-  loggedIn: false,
+  userID: 0,
   users: [],
   profileUser: defaultUser,
   login: (email: string, password: string) => {},
@@ -29,7 +29,7 @@ export const AuthContext = React.createContext(context);
 
 // Driver Function
 const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [userID, setUserID] = useState<number>(0);
   const [users, setUsers] = useState([]);
   const [profileUser, setProfileUser] = useState<User>(defaultUser);
   const navigate = useNavigate();
@@ -41,9 +41,9 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
         password,
       });
 
-      document.cookie = `SESSION=${data}`;
+      document.cookie = `SESSION=${data.message}`;
 
-      setLoggedIn(true);
+      setUserID(data.id);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -55,7 +55,7 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
       await axInst.get(`/log-out/${document.cookie.slice(8)}`);
 
       document.cookie = "SESSION=; Max-Age=-99999999;";
-      setLoggedIn(false);
+      setUserID(0);
       navigate("/login");
     } catch (e) {
       console.log(e);
@@ -73,7 +73,7 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     //     setLoggedIn(false);
     // });
     if (document.cookie.slice(8)) {
-      setLoggedIn(true);
+      // setLoggedIn(true);
       return true;
     }
     else
@@ -103,7 +103,7 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   }
 
   const contextValue = {
-    loggedIn,
+    userID,
     users,
     profileUser,
     login: loginHandler,

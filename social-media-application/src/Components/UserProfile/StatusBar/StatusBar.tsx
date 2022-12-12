@@ -1,19 +1,21 @@
+import { useContext } from "react"
 import { useNavigate } from "react-router";
 
 import { axInst } from "../../../Util/axInst";
+import { AuthContext } from "../../../Context/AuthContext";
 
-import { userId } from "../../../Util/Interfaces/User";
 import "./StatusBar.css";
 
 const StatusBar = () => {
   const navigate = useNavigate();
+  const { userID } = useContext(AuthContext);
 
   const submitHandler = (event: any) => {
     event.preventDefault();
 
     axInst
       .post("/posts/create/" + document.cookie.slice(8), {
-        userId,
+        userID,
         content: event.target[0].value,
       })
       .then(() => {

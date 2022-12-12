@@ -10,7 +10,7 @@ import SearchUsers from "./Components/SearchUsers/SearchUsers";
 import "./App.css";
 
 function App() {
-  const { loggedIn, isLoggedIn } = useContext(AuthContext);
+  const { userID, isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     // if (!) {
@@ -22,14 +22,14 @@ function App() {
 
   return (
     <Routes>
-      {loggedIn && (
+      {userID && (
         <>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/search" element={<SearchUsers />} />
         </>
       )}
-      {!loggedIn && (
+      {!userID && (
         <>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

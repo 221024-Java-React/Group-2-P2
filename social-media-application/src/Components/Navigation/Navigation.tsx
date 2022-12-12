@@ -15,7 +15,7 @@ import "./Navigation.css";
 
 const Navigation = () => {
 
-  const { loggedIn, logout, search } = useContext(AuthContext);
+  const { userID, logout, search } = useContext(AuthContext);
 
   const logoutHandler = () => {
     logout();
@@ -37,7 +37,7 @@ const Navigation = () => {
         <FontAwesomeIcon icon={faPeopleRobbery} className="logo" />
         <h1>TimeBandit</h1>
       </Link>
-      {loggedIn && (
+      {userID && (
         <div className="nav">
           <form onSubmit={searchHandler}>
             <input type="text" name="search" placeholder="Search"></input>

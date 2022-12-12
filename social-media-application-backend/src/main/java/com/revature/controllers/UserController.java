@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.models.LoginResponse;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
@@ -51,11 +52,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
+    public ResponseEntity<LoginResponse> login(@RequestBody User user, HttpSession session) {
         User tempUser = userService.login(user);
         if(tempUser != null){
             session.setAttribute("CurrentUser", tempUser.getId());
-            return new ResponseEntity<>(Base64.getEncoder().encodeToString(session.getId().getBytes()), HttpStatus.OK);
+            LoginResponse response = new LoginResponse(tempUser.getId(), Base64.getEncoder().encodeToString(session.getId().getBytes()));
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
