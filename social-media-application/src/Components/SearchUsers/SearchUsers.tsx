@@ -10,14 +10,14 @@ import { User } from "../../Util/Interfaces/User";
 import axios from "axios";
 
 const SearchUsers = () => {
-  const { userID, isLoggedIn, users } = useContext(AuthContext);
+  const { loggedInUser, isLoggedIn, users } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
 
     isLoggedIn();
 
-    if (!userID) {
+    if (!loggedInUser.id) {
       navigate("/login");
     }
 

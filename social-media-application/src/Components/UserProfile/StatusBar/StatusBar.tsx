@@ -8,14 +8,14 @@ import "./StatusBar.css";
 
 const StatusBar = () => {
   const navigate = useNavigate();
-  const { userID } = useContext(AuthContext);
+  const { loggedInUser } = useContext(AuthContext);
 
   const submitHandler = (event: any) => {
     event.preventDefault();
 
     axInst
       .post("/posts/create/" + document.cookie.slice(8), {
-        userID,
+        userID: loggedInUser.id,
         content: event.target[0].value,
       })
       .then(() => {

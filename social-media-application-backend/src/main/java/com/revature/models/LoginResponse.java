@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginResponse {
     
-    private int id;
+    private User user;
     private String message;
 }

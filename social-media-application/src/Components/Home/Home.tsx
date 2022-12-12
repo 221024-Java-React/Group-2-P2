@@ -15,7 +15,7 @@ import OnlineUsers from "../OnlineUsers/OnlineUsers";
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
-  const { userID, isLoggedIn } = useContext(AuthContext);
+  const { loggedInUser, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const getAllPosts = async () => {
@@ -31,7 +31,7 @@ const Home = () => {
 
     isLoggedIn();
 
-    if (!userID) {
+    if (!loggedInUser.id) {
       navigate("/login");
     }
 

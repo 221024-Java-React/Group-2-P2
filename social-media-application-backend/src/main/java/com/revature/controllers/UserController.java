@@ -56,7 +56,7 @@ public class UserController {
         User tempUser = userService.login(user);
         if(tempUser != null){
             session.setAttribute("CurrentUser", tempUser.getId());
-            LoginResponse response = new LoginResponse(tempUser.getId(), Base64.getEncoder().encodeToString(session.getId().getBytes()));
+            LoginResponse response = new LoginResponse(tempUser, Base64.getEncoder().encodeToString(session.getId().getBytes()));
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

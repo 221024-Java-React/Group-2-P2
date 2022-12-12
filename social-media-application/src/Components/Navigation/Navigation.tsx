@@ -15,7 +15,7 @@ import "./Navigation.css";
 
 const Navigation = () => {
 
-  const { userID, logout, search } = useContext(AuthContext);
+  const { loggedInUser, logout, search, getProfile } = useContext(AuthContext);
 
   const logoutHandler = () => {
     logout();
@@ -37,7 +37,7 @@ const Navigation = () => {
         <FontAwesomeIcon icon={faPeopleRobbery} className="logo" />
         <h1>TimeBandit</h1>
       </Link>
-      {userID && (
+      {loggedInUser.id && (
         <div className="nav">
           <form onSubmit={searchHandler}>
             <input type="text" name="search" placeholder="Search"></input>
@@ -45,7 +45,7 @@ const Navigation = () => {
                 <FontAwesomeIcon className="icon" icon={faSearch} />
             </button>
           </form>
-          <Link to="/profile">
+          <Link onClick={() => getProfile(loggedInUser)} to="/profile">
             <FontAwesomeIcon className="icon" icon={faUser} />
           </Link>
           <FontAwesomeIcon

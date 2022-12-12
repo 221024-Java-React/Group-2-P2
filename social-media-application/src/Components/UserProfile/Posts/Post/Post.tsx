@@ -11,7 +11,7 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
   // const date = new Date(2022126121615588529000);
   // console.log(date);
 
-  const { userID } = useContext(AuthContext);
+  const { loggedInUser } = useContext(AuthContext);
 
   const deleteHandler = () => {
     // TO DO: Delete post on frontend
@@ -34,12 +34,12 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
         </div>
         <p>{post.content}</p>
         <>
-          {post.userId === userID && (
+          {post.userId === loggedInUser.id && (
             <button onClick={deleteHandler}>Delete</button>
           )}
         </>
         <>
-          {post.userId !== userID && (
+          {post.userId !== loggedInUser.id && (
             <button>Like</button>
           )}
         </>
