@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.models.Comment;
 import com.revature.models.Post;
 import com.revature.models.User;
+import com.revature.repositories.CommentRepository;
 import com.revature.repositories.PostRepository;
 import com.revature.repositories.UserRepository;
 
@@ -23,6 +25,9 @@ public class PostService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     public Post createPost(Post post){
         Optional<User> user = userRepository.findById(post.getUserId());
@@ -59,5 +64,9 @@ public class PostService {
 
     public Post update(Post post) {
         return postRepository.save(post);
+    }
+
+    public Comment createComment(Comment comment) {
+        return commentRepository.save(comment);
     } 
 }

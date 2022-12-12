@@ -10,8 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -45,4 +45,10 @@ public class Post {
     @ElementCollection
     @Column(name = "users_liked")
     private List<Integer> usersLiked;
+
+
+    @OneToMany(targetEntity = Comment.class, cascade = { CascadeType.ALL}, orphanRemoval = true)
+    @JoinTable(name = "users_comments", joinColumns = { @JoinColumn(name = "post_id")}, inverseJoinColumns = { @JoinColumn(name = "comment_id") })
+    private List<Comment> usersComments;
+
 }

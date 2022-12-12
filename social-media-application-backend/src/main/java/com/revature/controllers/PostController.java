@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.models.Comment;
 import com.revature.models.Post;
 import com.revature.models.User;
 import com.revature.services.PostService;
@@ -52,11 +53,16 @@ public class PostController {
     }
 
     @PostMapping("/create/{cookieId}")
-    public ResponseEntity<Post> createPost(@RequestBody Post post, @PathVariable String cookieId, HttpSession session) {
+    public ResponseEntity<Post> createPost(@RequestBody Post post, @PathVariable String cookieId) {
         byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
         String decodedCookieId = new String(decodedCookieIdBytes);
         post.setUserId(userService.getSessionAttributesById(decodedCookieId));
         return new ResponseEntity<>(postService.createPost(post), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/comment")
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+        return new ResponseEntity<>(postService.createComment(comment), HttpStatus.CREATED);
     }
 
     @PostMapping("/like/{cookieId}/{postId}")
