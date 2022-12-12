@@ -19,7 +19,7 @@ const context = {
   profileUser: defaultUser,
   login: (email: string, password: string) => {},
   logout: () => {},
-  isLoggedIn: () : boolean => { return false; },
+  isLoggedIn: () => {},
   search: (input : string) => {},
   getProfile: (user: User) => {},
 };
@@ -62,22 +62,23 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
     }
   };
 
-  const isLoggedInHandler = () : boolean => {
+  const isLoggedInHandler = () => {
 
     console.log("verifying user");
 
-    // axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
-    //     console.log(response);
-    //     setLoggedIn(true);
-    // }).catch(e => {
-    //     setLoggedIn(false);
-    // });
-    if (document.cookie.slice(8)) {
-      // setLoggedIn(true);
-      return true;
-    }
-    else
-      return false;
+    axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
+        console.log(response);
+        setLoggedInUser(response.data);
+    }).catch(e => {
+        setLoggedInUser(defaultUser);
+    });
+
+    // if (document.cookie.slice(8)) {
+    //   // setLoggedIn(true);
+    //   return true;
+    // }
+    // else
+    //   return false;
   };
 
   const searchHandler = async (input: string) => {
