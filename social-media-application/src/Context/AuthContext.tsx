@@ -3,13 +3,25 @@ import React, { useState, FC } from "react";
 import { useNavigate } from "react-router";
 
 import { axInst } from "../Util/axInst";
+import { User } from "../Util/Interfaces/User";
+
+const defaultUser : User = {
+  id: 0,
+  profileName: "",
+  email: "",
+  password: "",
+};
 
 // Init context object
 const context = {
-  loggedIn: false,
+  loggedInUser: defaultUser,
+  users: [],
+  profileUser: defaultUser,
   login: (email: string, password: string) => {},
   logout: () => {},
-  verifyUser: () => {},
+  isLoggedIn: () : boolean => { return false; },
+  search: (input : string) => {},
+  getProfile: (user: User) => {},
 };
 
 // React component we return in AuthContextProvider
@@ -17,7 +29,9 @@ export const AuthContext = React.createContext(context);
 
 // Driver Function
 const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedInUser, setLoggedInUser] = useState<User>(defaultUser);
+  const [users, setUsers] = useState([]);
+  const [profileUser, setProfileUser] = useState<User>(defaultUser);
   const navigate = useNavigate();
 
   const loginHandler = async (email: string, password: string) => {
@@ -27,9 +41,9 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
         password,
       });
 
-      document.cookie = `SESSION=${data}`;
+      document.cookie = `SESSION=${data.message}`;
 
-      setLoggedIn(true);
+      setLoggedInUser(data.user);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -41,31 +55,62 @@ const AuthContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
       await axInst.get(`/log-out/${document.cookie.slice(8)}`);
 
       document.cookie = "SESSION=; Max-Age=-99999999;";
-      setLoggedIn(false);
+      setLoggedInUser(defaultUser);
       navigate("/login");
     } catch (e) {
       console.log(e);
     }
   };
 
-  const verifyUser = () => {
+  const isLoggedInHandler = () : boolean => {
 
-    axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
-        console.log(response);
-        setLoggedIn(true);
-    }).catch(e => {
-        setLoggedIn(false);
-    });
-    // if (document.cookie.slice(8)) {
-    //   setLoggedIn(true);
-    // }
+    console.log("verifying user");
+
+    // axios.get("http://localhost:8090/" + document.cookie.slice(8)).then((response) => {
+    //     console.log(response);
+    //     setLoggedIn(true);
+    // }).catch(e => {
+    //     setLoggedIn(false);
+    // });
+    if (document.cookie.slice(8)) {
+      // setLoggedIn(true);
+      return true;
+    }
+    else
+      return false;
   };
 
+  const searchHandler = async (input: string) => {
+
+    try {
+      const link : string = "http://localhost:8090/users/profilename/" + input;
+
+        axios.get(link).then((response) => {
+            console.log(response.data);
+            setUsers(response.data);
+        }).catch(e => {
+
+        });
+
+      navigate("/search");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getProfileHandler = async (user: User) => {
+    setProfileUser(user);
+  }
+
   const contextValue = {
-    loggedIn,
+    loggedInUser,
+    users,
+    profileUser,
     login: loginHandler,
     logout: logoutHandler,
-    verifyUser,
+    isLoggedIn: isLoggedInHandler,
+    search: searchHandler,
+    getProfile: getProfileHandler,
   };
 
   return (

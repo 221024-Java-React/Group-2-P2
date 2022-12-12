@@ -1,28 +1,24 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
+import OnlineUser from "../OnlineUsers/OnlineUser";
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "../OnlineUsers/OnlineUsers.css";
 
 import Navigation from "../Navigation/Navigation";
 import { User } from "../../Util/Interfaces/User";
 import axios from "axios";
 
 const SearchUsers = () => {
-    const [users, setUsers] = useState([]);
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedInUser, isLoggedIn, users } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loggedIn) {
-      navigate("/login");
-    } else {
-        axios.get("http://localhost:8090/users/profilename/ris").then((response) => {
-            console.log(response.data);
-            setUsers(response.data);
-        }).catch(e => {
 
-        });
+    isLoggedIn();
+
+    if (!loggedInUser.id) {
+      navigate("/login");
     }
 
   }, []);
@@ -30,16 +26,11 @@ const SearchUsers = () => {
   return (
     <>
       <Navigation />
-      <>
-    {users.map((user: User) => {
-                    return (
-                        <div className="row border border-dark mb-2" key={user.id}>
-                            <div className="col-1">{user.id}</div>
-                            <div className="col-11">{user.profileName}</div>
-                        </div>
-                    )
-                    })}
-    </>
+      <div className="users">
+        {users.map((user: User) => {
+          return <OnlineUser user={user}></OnlineUser>
+        })}
+      </div>
     </>
   );
 };

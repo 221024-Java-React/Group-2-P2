@@ -33,12 +33,20 @@
   padding: 0.5rem;
 }
 
-.nav > input {
+.nav > form > * {
+  padding: 0.5rem;
+}
+
+.nav > form > input {
   width: 8rem;
   margin: 0 1rem;
   border-radius: 20px;
   border: none;
   box-shadow: 0 0 2px white;
+}
+
+.nav button {
+  color: black;
 }
 
 .nav a {
