@@ -26,3 +26,7 @@
   background-color: var(--fourth-theme);
   cursor: pointer;
 }
+
+#status-bar-button {
+    cursor: pointer;
+}

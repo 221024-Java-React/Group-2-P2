@@ -6,26 +6,30 @@ import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import UserProfile from "./Components/UserProfile/UserProfile";
+import SearchUsers from "./Components/SearchUsers/SearchUsers";
 import "./App.css";
 
 function App() {
-  const { loggedIn, verifyUser } = useContext(AuthContext);
+  const { loggedInUser, isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!loggedIn) {
-      verifyUser();
-    }
-  }, [loggedIn, verifyUser]);
+    // if (!) {
+    //   isLoggedIn();
+    //   // verifyUser();
+    // }
+    isLoggedIn();
+  }, []);
 
   return (
     <Routes>
-      {loggedIn && (
+      {loggedInUser.id && (
         <>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/search" element={<SearchUsers />} />
         </>
       )}
-      {!loggedIn && (
+      {!loggedInUser.id && (
         <>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

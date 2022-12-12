@@ -7,14 +7,28 @@ import {
   faUser,
   faPeopleRobbery,
   faDoorOpen,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navigation.css";
 
+
+
 const Navigation = () => {
-  const { loggedIn, logout } = useContext(AuthContext);
+
+  const { loggedInUser, logout, search, getProfile } = useContext(AuthContext);
 
   const logoutHandler = () => {
     logout();
+  };
+
+  const searchHandler = (event : any) => {
+    event.preventDefault();
+
+    console.log("submitted");
+
+    console.log(event);
+
+    search(event.target[0].value);
   };
 
   return (
@@ -23,10 +37,15 @@ const Navigation = () => {
         <FontAwesomeIcon icon={faPeopleRobbery} className="logo" />
         <h1>TimeBandit</h1>
       </Link>
-      {loggedIn && (
+      {loggedInUser.id && (
         <div className="nav">
-          <input type="text" name="search" placeholder="Search" />
-          <Link to="/profile">
+          <form onSubmit={searchHandler}>
+            <input type="text" name="search" placeholder="Search"></input>
+            <button type="submit">
+                <FontAwesomeIcon className="icon" icon={faSearch} />
+            </button>
+          </form>
+          <Link onClick={() => getProfile(loggedInUser)} to="/profile">
             <FontAwesomeIcon className="icon" icon={faUser} />
           </Link>
           <FontAwesomeIcon

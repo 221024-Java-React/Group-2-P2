@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { axInst } from "../../Util/axInst";
 
@@ -9,16 +9,16 @@ import AboutMe from "./AboutMe/AboutMe";
 import PostContainer from "./Posts/PostContainer/PostContainer";
 import Post from "./Posts/Post/Post";
 import { IPost } from "../../Util/Interfaces/IPost";
+import { AuthContext } from "../../Context/AuthContext";
 import "./UserProfile.css";
 
 const UserProfile = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  const { profileUser } = useContext(AuthContext);
 
   const getAllPosts = async () => {
     try {
-      /// NEED FILTERED POSTS ROUTE
-      const userId = 1; // TODO get user id
-      const { data } = await axInst.get("/posts/all/" + userId);
+      const { data } = await axInst.get("/posts/all/" + profileUser.id);
       setPosts(data);
 
     } catch (e) {
@@ -33,7 +33,7 @@ const UserProfile = () => {
   return (
     <>
       <Navigation />
-      <ProfileBanner profileName={""} />
+      <ProfileBanner />
       <StatusBar />
       <AboutMe about={""} />
       <PostContainer>
