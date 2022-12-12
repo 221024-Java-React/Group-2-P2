@@ -4,7 +4,7 @@ import { AuthContext } from "../../Context/AuthContext";
 
 import { axInst } from "../../Util/axInst";
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 
 import Navigation from "../Navigation/Navigation";
 import StatusBar from "../UserProfile/StatusBar/StatusBar";
@@ -28,7 +28,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-
     isLoggedIn();
 
     if (!loggedInUser.id) {
@@ -42,18 +41,19 @@ const Home = () => {
     <>
       <Navigation />
       <StatusBar />
-        <div className="row mt-2">
-            <div className="col-10">
-                <PostContainer>
-                    {posts.map((postData: IPost) => {
-                    return <Post key={postData.id} post={postData} />;
-                    })}
-                </PostContainer>
-            </div>
+      <div className="row mt-2">
+        <div className="col-2" />
+        <div className="col-8">
+          <PostContainer>
+            {posts.map((postData: IPost) => {
+              return <Post key={postData.id} post={postData} />;
+            })}
+          </PostContainer>
+        </div>
         <div className="col-2">
-            <OnlineUsers />
+          <OnlineUsers />
         </div>
-        </div>
+      </div>
     </>
   );
 };

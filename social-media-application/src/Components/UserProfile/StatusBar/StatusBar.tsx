@@ -14,7 +14,7 @@ const StatusBar = () => {
     event.preventDefault();
 
     axInst
-      .post("/posts/create/" + document.cookie.slice(8), {
+      .post(`/posts/create/${document.cookie.slice(8)}`, {
         userID: loggedInUser.id,
         content: event.target[0].value,
       })

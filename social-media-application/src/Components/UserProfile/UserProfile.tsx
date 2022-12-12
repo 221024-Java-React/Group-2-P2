@@ -14,11 +14,11 @@ import "./UserProfile.css";
 
 const UserProfile = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
-  const { profileUser } = useContext(AuthContext);
+  const { profileUser, loggedInUser } = useContext(AuthContext);
 
   const getAllPosts = async () => {
     try {
-      const { data } = await axInst.get("/posts/all/" + profileUser.id);
+      const { data } = await axInst.get(`/posts/all/${profileUser.id}`);
       setPosts(data);
 
     } catch (e) {
@@ -28,13 +28,13 @@ const UserProfile = () => {
 
   useEffect(() => {
     getAllPosts();
-  }, []);
+  }, [profileUser.id]);
 
   return (
     <>
       <Navigation />
       <ProfileBanner />
-      <StatusBar />
+      {loggedInUser.profileName === profileUser.profileName && <StatusBar />}
       <AboutMe about={""} />
       <PostContainer>
         {posts.map((postData: IPost) => {
