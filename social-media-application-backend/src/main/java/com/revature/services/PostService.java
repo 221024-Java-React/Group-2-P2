@@ -55,5 +55,9 @@ public class PostService {
     public void deletePostById(int id) {
         postRepository.deletePostByIdFromJT(id);
         postRepository.deletePostById(id);
+    }
+
+    public Post update(Post post) {
+        return postRepository.save(post);
     } 
 }

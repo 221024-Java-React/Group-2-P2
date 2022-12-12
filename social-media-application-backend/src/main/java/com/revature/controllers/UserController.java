@@ -35,7 +35,7 @@ public class UserController {
     public ResponseEntity<String> checkIfLoggedIn(@PathVariable String cookieId, HttpSession session) {
         byte[] decodedCookieIdBytes = Base64.getDecoder().decode(cookieId);
         String decodedCookieId = new String(decodedCookieIdBytes);
-        if(userService.getSessionById(userService.getSessionById(decodedCookieId)) != null) {
+        if(userService.getSessionById(decodedCookieId) != null) {
             return new ResponseEntity<>("Currently Logged In", HttpStatus.OK);
         }
         return new ResponseEntity<>("Not Logged In", HttpStatus.UNAUTHORIZED);
