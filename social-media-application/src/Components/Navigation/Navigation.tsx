@@ -30,7 +30,7 @@ const Navigation = () => {
         <FontAwesomeIcon icon={faPeopleRobbery} className="logo" />
         <h1>TimeBandit</h1>
       </Link>
-      {loggedInUser.id && (
+      {loggedInUser.id !== 0 && (
         <div className="nav">
           <form onSubmit={searchHandler}>
             <input type="text" name="search" placeholder="Search"></input>
