@@ -1,14 +1,26 @@
-.reg-form {
-  max-width: 40vw;
+.register {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.reg-form {
+  max-width: 40vw;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 2rem auto;
+  box-shadow: -2px 2px 2px var(--primary-theme);
+  border: 1px solid var(--primary-theme);
+  border-radius: 10px;
+  background-color: var(--fourth-theme);
+  padding: 0.75rem;
 }
 
 .reg-form h1 {
   color: var(--secondary-theme);
-  text-decoration: underline;
+  margin-bottom: 1rem;
 }
 
 .reg-form > input {
@@ -28,7 +40,7 @@
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  color: var(--secondary-theme)
+  color: var(--secondary-theme);
 }
 
 .member {

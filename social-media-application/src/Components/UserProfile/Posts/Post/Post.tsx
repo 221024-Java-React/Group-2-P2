@@ -1,4 +1,4 @@
-import { FC, useContext, useState, useEffect } from "react";
+import { FC, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { axInst } from "../../../../Util/axInst";
@@ -11,7 +11,6 @@ import { AuthContext } from "../../../../Context/AuthContext";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
   const [showAddComment, setShowAddComment] = useState<boolean>(false);
-  const [comments, setComments] = useState([]);
   const { loggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -25,7 +24,6 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
     axInst
       .post(`/posts/like/${document.cookie.slice(8)}/${post.id}`)
       .then(response => {
-        console.log(response);
         return navigate(0);
       })
       .catch(e => {});
@@ -36,10 +34,11 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
   };
 
   const submitCommentHandler = (e: any) => {
-    console.log(e);
-    axInst.post("/posts/comment", {
+    e.preventDefault();
+
+    axInst.post("/posts/comment/" + post.id, {
       userId: loggedInUser.id,
-      message: e.target.value,
+      message: e.target[0].value,
     });
   };
 
@@ -73,9 +72,9 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
             <button type="submit">Add Comment</button>
           </form>
         )}
-        {/* {post.comments.map(comment => {
+        {post.usersComments.map(comment => {
           return <Comment key={comment.id} comment={comment} />;
-        })} */}
+        })}
         {post.userId !== loggedInUser.id && (
           <div className="responders">
             <button onClick={likeHandler}>

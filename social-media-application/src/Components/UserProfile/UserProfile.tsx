@@ -35,7 +35,8 @@ const UserProfile = () => {
       <Navigation />
       <ProfileBanner />
       {loggedInUser.profileName === profileUser.profileName && <StatusBar />}
-      <AboutMe about={""} />
+      <AboutMe />
+      <h2 className="posts-title">Your History</h2>
       <PostContainer>
         {posts.map((postData: IPost) => {
           return <Post key={postData.id} post={postData} />;
