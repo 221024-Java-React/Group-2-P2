@@ -15,58 +15,58 @@ import com.revature.repositories.CommentRepository;
 import com.revature.repositories.PostRepository;
 import com.revature.repositories.UserRepository;
 
-
 @Service
 @Transactional
 public class PostService {
-    
-    @Autowired
-    private PostRepository postRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private PostRepository postRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    public Post createPost(Post post){
-        Optional<User> user = userRepository.findById(post.getUserId());
-        if(user.isPresent()){
-            post.setProfileName(user.get().getProfileName());
-            post.setCreationTime(LocalDateTime.now());
-            List<Post> posts = user.get().getPosts();
-            posts.add(post);
-            user.get().setPosts(posts);
-        }
-        return postRepository.save(post);
+  @Autowired
+  private CommentRepository commentRepository;
+
+  public Post createPost(Post post) {
+    Optional<User> user = userRepository.findById(post.getUserId());
+    if (user.isPresent()) {
+      post.setProfileName(user.get().getProfileName());
+      post.setCreationTime(LocalDateTime.now());
+      List<Post> posts = user.get().getPosts();
+      posts.add(post);
+      user.get().setPosts(posts);
     }
+    return postRepository.save(post);
+  }
 
-    public List<Post> findAllPosts() {
-        return postRepository.findAllPosts();
+  public List<Post> findAllPosts() {
+    return postRepository.findAllPosts();
+  }
+
+  public List<Post> findAllUserPosts(int id) {
+    return postRepository.findAllUserPosts(id);
+  }
+
+  public Post findPostById(int id) {
+    Optional<Post> post = postRepository.findById(id);
+    if (post.isPresent()) {
+      return post.get();
     }
+    return null;
+  }
 
-    public List<Post> findAllUserPosts(int id) {
-        return postRepository.findAllUserPosts(id);
-    }
+  public void deletePostById(int id) {
+    postRepository.deletePostByIdFromUT(id);
+    postRepository.deletePostByIdFromJT(id);
+    postRepository.deletePostById(id);
+  }
 
-    public Post findPostById(int id) {
-        Optional<Post> post = postRepository.findById(id);
-        if(post.isPresent()){
-            return post.get();
-        }
-        return null;
-    }
+  public Post update(Post post) {
+    return postRepository.save(post);
+  }
 
-    public void deletePostById(int id) {
-        postRepository.deletePostByIdFromJT(id);
-        postRepository.deletePostById(id);
-    }
-
-    public Post update(Post post) {
-        return postRepository.save(post);
-    }
-
-    public Comment createComment(Comment comment) {
-        return commentRepository.save(comment);
-    } 
+  public Comment createComment(Comment comment) {
+    return commentRepository.save(comment);
+  }
 }

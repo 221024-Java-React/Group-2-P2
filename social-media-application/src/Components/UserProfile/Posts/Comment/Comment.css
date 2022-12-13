@@ -1,8 +1,9 @@
 .comment {
   border: 1px solid black;
-  background: var(--primary-theme);
+  background: #FFD478;
   margin: 1rem;
   padding: .5rem;
+  width: 40rem;
 }
 
 .username {

@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthContext";
 
 import MarkPic from "../../../Assets/MarkPic.jpg";
@@ -6,7 +6,6 @@ import "./ProfileBanner.css";
 
 const ProfileBanner = () => {
   const { profileUser } = useContext(AuthContext);
-  console.log(profileUser);
 
   return (
     <div className="banner">
