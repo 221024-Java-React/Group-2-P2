@@ -36,6 +36,8 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
   };
 
   const submitCommentHandler = (e: any) => {
+    e.preventDefault();
+    
     console.log(e);
     axInst.post("/posts/comment", {
       userId: loggedInUser.id,

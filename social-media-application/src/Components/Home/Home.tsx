@@ -21,6 +21,7 @@ const Home = () => {
   const getAllPosts = async () => {
     try {
       const { data } = await axInst.get("/posts/all");
+      console.log(data);
       setPosts(data);
     } catch (e) {
       console.log(e);
@@ -35,7 +36,7 @@ const Home = () => {
     }
 
     getAllPosts();
-  }, [isLoggedIn, loggedInUser.id, navigate]);
+  }, []);
 
   return (
     <>
