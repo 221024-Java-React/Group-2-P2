@@ -29,10 +29,6 @@
   align-items: center;
 }
 
-.nav > button {
-  background: none;
-}
-
 .nav > * {
   padding: 0.5rem;
 }
@@ -49,10 +45,6 @@
   box-shadow: 0 0 2px white;
 }
 
-.nav button {
-  color: black;
-}
-
 .nav a {
   color: black;
 }
@@ -62,4 +54,12 @@
   height: auto;
   margin: -0.1rem;
   cursor: pointer;
+}
+
+.nav button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none !important;
+  font-size:0;
 }

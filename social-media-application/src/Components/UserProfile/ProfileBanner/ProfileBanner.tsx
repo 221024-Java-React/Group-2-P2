@@ -14,7 +14,7 @@ const ProfileBanner = () => {
         <img src={MarkPic} alt="Profile Pic" />
         <h1>{profileUser.profileName}</h1>
       </div>
-      <button>Update Info</button>
+      {/* <button>Update Info</button> */}
     </div>
   );
 };

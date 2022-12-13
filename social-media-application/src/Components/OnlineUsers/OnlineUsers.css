@@ -5,4 +5,5 @@
   padding: 1rem;
   border-radius: 15px;
   background-color: var(--fourth-theme);
+  margin-left: 0;
 }
