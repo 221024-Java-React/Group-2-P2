@@ -33,11 +33,11 @@ const Register = () => {
           <input type="text" name="profileName" placeholder="Profile Name" />
           <input type="text" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
-          <input
+          {/* <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-          />
+          /> */}
           <button type="submit">Register</button>
         </form>
         <div className="member">

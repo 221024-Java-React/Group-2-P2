@@ -43,13 +43,15 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
   const submitCommentHandler = (e: any) => {
     e.preventDefault();
 
-    axInst.post("/posts/comment/" + post.id, {
-      userId: loggedInUser.id,
-      message: e.target[0].value,
-    });
+    axInst
+      .post("/posts/comment/" + post.id, {
+        userId: loggedInUser.id,
+        message: e.target[0].value,
+      })
+      .then(() => {
+        return navigate(0);
+      });
   };
-
-  console.log(post);
 
   return (
     <div className="post">
