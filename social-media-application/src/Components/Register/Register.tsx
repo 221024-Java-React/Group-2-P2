@@ -27,22 +27,24 @@ const Register = () => {
   return (
     <>
       <Navigation />
-      <form className="reg-form" onSubmit={registerHandler}>
+      <div className="register">
         <h1>Register</h1>
-        <input type="text" name="profileName" placeholder="Profile Name" />
-        <input type="text" name="email" placeholder="Email" />
-        <input type="password" name="password" placeholder="Password" />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-        />
-        <button type="submit">Register</button>
+        <form className="reg-form" onSubmit={registerHandler}>
+          <input type="text" name="profileName" placeholder="Profile Name" />
+          <input type="text" name="email" placeholder="Email" />
+          <input type="password" name="password" placeholder="Password" />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+          />
+          <button type="submit">Register</button>
+        </form>
         <div className="member">
           <h4>Already A Member?</h4>
           <a href="/login">Login</a>
         </div>
-      </form>
+      </div>
     </>
   );
 };

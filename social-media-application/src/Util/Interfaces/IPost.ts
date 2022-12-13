@@ -7,5 +7,5 @@ export interface IPost {
   profileName: string;
   userId: number;
   usersLiked: number[];
-  comments: IComment[];
+  usersComments: IComment[];
 }

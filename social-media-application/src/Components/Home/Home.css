@@ -2,3 +2,9 @@
   width: 80vw;
   margin: 0 auto;
 }
+
+.posts-title {
+  margin-left: 2rem;
+  color: var(--primary-theme);
+  text-shadow: 1px 1px 1px var(--secondary-theme);
+}

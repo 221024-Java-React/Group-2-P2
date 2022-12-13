@@ -12,6 +12,7 @@ import PostContainer from "../UserProfile/Posts/PostContainer/PostContainer";
 import Post from "../UserProfile/Posts/Post/Post";
 import { IPost } from "../../Util/Interfaces/IPost";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
+import './Home.css';
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -21,7 +22,6 @@ const Home = () => {
   const getAllPosts = async () => {
     try {
       const { data } = await axInst.get("/posts/all");
-      console.log(data);
       setPosts(data);
     } catch (e) {
       console.log(e);
@@ -45,6 +45,7 @@ const Home = () => {
       <div className="row mt-2">
         <div className="col-2" />
         <div className="col-8">
+          <h2 className="posts-title">Welcome Home!</h2>
           <PostContainer>
             {posts.map((postData: IPost) => {
               return <Post key={postData.id} post={postData} />;
