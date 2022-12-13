@@ -1,5 +1,6 @@
 import { FC, useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 import { axInst } from "../../../../Util/axInst";
 
@@ -11,8 +12,14 @@ import { AuthContext } from "../../../../Context/AuthContext";
 
 const Post: FC<{ post: IPost }> = ({ post }) => {
   const [showAddComment, setShowAddComment] = useState<boolean>(false);
-  const { loggedInUser } = useContext(AuthContext);
+  const { loggedInUser, getProfile } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const getProfileHandler = () => {
+    axInst.get("/users/id/" + post.userId).then(({ data }) => {
+      getProfile(data);
+    });
+  };
 
   const deleteHandler = () => {
     axInst.delete(`/posts/delete/${post.id}`).then(() => {
@@ -42,11 +49,14 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
     });
   };
 
+  console.log(post);
+
   return (
     <div className="post">
       <div className="post-header">
-        {/* <img src="" alt="Profile Pic" /> */}
-        <h3>{post.profileName}</h3>
+        <Link to="/profile" onClick={getProfileHandler}>
+          <h3>{post.profileName}</h3>
+        </Link>
         <div className="content">
           <p>{post.content}</p>
         </div>
@@ -61,36 +71,34 @@ const Post: FC<{ post: IPost }> = ({ post }) => {
             "/" +
             post.creationTime[0]}
         </p>
-        {showAddComment && (
-          <form className="comment-form" onSubmit={submitCommentHandler}>
-            <textarea
-              name="comment"
-              placeholder="What do you think?"
-              rows={3}
-              cols={30}
-            ></textarea>
-            <button type="submit">Add Comment</button>
-          </form>
+        <div className="responders">
+          <button onClick={likeHandler}>
+            {" "}
+            {post.usersLiked.find((id: number) => id === loggedInUser.id)
+              ? "Unlike"
+              : "Like"}
+          </button>
+          <button onClick={commentHandler}>Comment</button>
+        </div>
+        {post.userId === loggedInUser.id && (
+          <button onClick={deleteHandler}>Delete</button>
         )}
+      </div>
+      {showAddComment && (
+        <form className="comment-form" onSubmit={submitCommentHandler}>
+          <textarea
+            name="comment"
+            placeholder="What do you think?"
+            rows={3}
+            cols={30}
+          ></textarea>
+          <button type="submit">Add Comment</button>
+        </form>
+      )}
+      <div className="comment-container">
         {post.usersComments.map(comment => {
           return <Comment key={comment.id} comment={comment} />;
         })}
-        {post.userId !== loggedInUser.id && (
-          <div className="responders">
-            <button onClick={likeHandler}>
-              {" "}
-              {post.usersLiked.find((id: number) => id === loggedInUser.id)
-                ? "Like"
-                : "Unlike"}
-            </button>
-            <button onClick={commentHandler}>Comment</button>
-          </div>
-        )}
-        <>
-          {post.userId === loggedInUser.id && (
-            <button onClick={deleteHandler}>Delete</button>
-          )}
-        </>
       </div>
     </div>
   );
