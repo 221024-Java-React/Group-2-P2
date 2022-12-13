@@ -4,13 +4,17 @@
   align-items: center;
 }
 
+.register h1 {
+  margin-top: 2rem;
+  color: var(--secondary-theme);
+  margin-bottom: 1rem;
+}
+
 .reg-form {
   max-width: 40vw;
   display: flex;
-  display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 2rem auto;
   box-shadow: -2px 2px 2px var(--primary-theme);
   border: 1px solid var(--primary-theme);
   border-radius: 10px;
