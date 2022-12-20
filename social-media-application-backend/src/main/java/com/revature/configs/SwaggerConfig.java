@@ -12,13 +12,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 @EnableWebMvc
 public class SwaggerConfig {
-    
-    @Bean
-    public Docket swaggerConfiguration() {
-        return new Docket(DocumentationType.SWAGGER_2)
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("com.revature.controllers"))
-            .paths(PathSelectors.any())
-            .build();
-    }
+
+  @Bean
+  public Docket swaggerConfiguration() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("com.revature.controllers"))
+        .paths(PathSelectors.any())
+        .build();
+  }
 }
